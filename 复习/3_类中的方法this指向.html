@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+
+        class Person {
+            constructor(name,age){
+                this.name=name
+                this.age=age
+
+            }
+            speak(){
+                console.log(this)
+            }
+        }
+        const p1=new Person('李四',10)
+        p1.speak() // this指向Person的实例对象
+        const x=p1.speak
+        x()//直接调用，类中的所有定义的方法，都开启了严格模式，所以this是undefined
+    </script>
+  </body>
+</html>
