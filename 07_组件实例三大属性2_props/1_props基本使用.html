@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script
+      type="text/javascript"
+      src="../js/react-dom.development.js"
+    ></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!-- 引入prop-types，用于对组件标签属性进行限制 -->
+    <script type="text/javascript" src="../js/prop-types.js"></script>
+
+    <script type="text/babel">
+      class Person extends React.Component {
+        render() {
+          console.log(this);
+          const { name, age, gender } = this.props;
+          return (
+            <ul>
+              <li>姓名：{name}</li>
+              <li>性别：{gender}</li>
+              <li>年龄：{age + 1}</li>
+            </ul>
+          );
+        }
+      }
+      //   对标签属性进行类型、必要性的限制
+      Person.propType = {
+        name: PropTypes.string.isRequired,
+        age: PropTypes.number,
+        gender: PropTypes.string,
+        speak: PropTypes.func,
+      };
+      //   指定默认值
+      Person.defaultProps = {
+        name: "张三",
+        age: 18,
+        gender: "男",
+      };
+
+      ReactDOM.render(
+        <Person name="tom" speak={speak} />,
+        document.getElementById("test"),
+      );
+
+      function speak() {
+        console.log("speak");
+      }
+    </script>
+  </body>
+</html>
