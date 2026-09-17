@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="test"></div>
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <script
+      type="text/javascript"
+      src="../js/react-dom.development.js"
+    ></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!-- 引入prop-types，用于对组件标签属性进行限制 -->
+    <script type="text/javascript" src="../js/prop-types.js"></script>
+
+    <script type="text/babel">
+      class Demo extends React.Component {
+        showData = () => {
+            console.log(this.refs.input1.value);
+            console.log(this.refs.input2.value);
+        }
+        render() {
+          return (
+            <div>
+              <input ref="input1" type="text" placeholder="点击按钮提示数据" />
+              <button onClick={this.showData}>点击我提示左侧数据</button>
+              <input ref="input2" onBlur={this.showData} type="text" placeholder="失去焦点提示数据" />
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(<Demo />, document.getElementById("test"));
+    </script>
+  </body>
+</html>
