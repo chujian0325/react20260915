@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="test"></div>
+    <script
+      type="text/javascript"
+      src="../js/18.3.1/react.development.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../js/18.3.1/react-dom.development.js"
+    ></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/javascript" src="../js/prop-types.js"></script>
+    <style>
+      .list {
+        width: 200px;
+        height: 150px;
+        background-color: skyblue;
+        overflow: auto;
+      }
+      .news {
+        height: 30px;
+      }
+    </style>
+    <script type="text/babel">
+      class News extends React.Component {
+        state = {
+          newsArr: [],
+        };
+
+        componentDidMount() {
+          setInterval(() => {
+            const { newsArr } = this.state;
+            // 模拟一条新闻
+            const news = "新闻" + (newsArr.length + 1);
+            this.setState({ newsArr: [news, ...newsArr] });
+          }, 1000);
+        }
+
+        getSnapshotBeforeUpdate(preProps, preState) {
+          return this.refs.list.scrollHeight;
+        }
+
+        componentDidUpdate(preProps, preState, snapshotValue) {
+          this.refs.list.scrollTop +=
+            this.refs.list.scrollHeight - snapshotValue;
+        }
+
+        render() {
+          return (
+            <div ref="list" className="list">
+              {this.state.newsArr.map((n, index) => {
+                return (
+                  <div className="news" key={index}>
+                    {n}
+                  </div>
+                );
+              })}
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(<News />, document.getElementById("test"));
+    </script>
+  </body>
+</html>

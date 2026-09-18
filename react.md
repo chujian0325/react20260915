@@ -1,0 +1,91 @@
+React是用户构建用户界面的javascript库
+是一个将数据渲染为HTML视图的开源js库
+
+为什么要学？
+1. 原生js操作DOM繁琐，效率低
+2. 使用js直接操作DOM，浏览器会进行大量的重绘重排
+3. 原生js没有组件化的编码方案，代码复用率低
+
+react特点：
+1. 采用组件化模式，声明式编码，提高开发效率和组件复用率。
+2. 在react native中可以使用react语法进行移动端开发。（只懂js可以进行app开发）
+3. 使用虚拟DOM+优秀的Diffing算法，尽量减少与真实DOM的交互。
+
+React高效的原因：
+1. 使用虚拟DOM，不总是直接操作页面真实DOM
+2. DOM Diffing算法，最小化页面重绘
+
+相关js库
+<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script> 
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/prop-types@15.6.2/prop-types.js"></script>
+
+
+```
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <!-- 准备好一个容器 -->
+    <div id="test"></div>
+    <!-- 引入react核心库 -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+
+    <!-- 引入react-dom，用于支持react操作DOM -->
+    <script
+      type="text/javascript"
+      src="../js/react-dom.development.js"
+    ></script>
+    <!-- 引入babel，用户将jsx转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+
+    <script type="text/babel">
+      /*此处一定要写babel*/
+      // 1. 创建虚拟DOM
+      const VDOM = (
+        <h1>Hello，React</h1>
+      ); /**此处一定不要写引号，因为不是字符串*/
+      // 2. 渲染虚拟DOM到页面
+
+      ReactDOM.render(VDOM, document.getElementById("test"));
+    </script>
+  </body>
+</html>
+
+```
+
+chrome插件：React Developer Tools 8.0.0
+你写的代码是 html 文件，双击打开地址栏开头是 `file://`
+React DevTools 默认**不允许读取本地文件**，所以检测不到 React，控制台就没有 Components 标签。
+
+✅ 解决：
+1. chrome 地址栏输入：`chrome://extensions/`
+2. 找到 React Developer Tools → 点【详情】
+3. 打开 **允许访问文件网址** 开关
+4. 刷新你的 html 页面（一定要刷新！）
+
+react组件：
+1. 函数式组件
+2. 类组件
+
+
+组件实例的三大核心属性：state
+强烈注意：
+1. 组件中的render方法中的this为组件实例对象
+2. 组件自定义的方法中this为undefined，如何解决？
+    a. 强制绑定this:通过函数对象的bind()方法修改this指向
+    b. 箭头函数
+3. 状态数据，不能直接更改，要用setState()
+
+Props
+
+
+ref
+不建议使用字符串形式的ref，可能会出现一些效率问题，未来版本可能弃用
+

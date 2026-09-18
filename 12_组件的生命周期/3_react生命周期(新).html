@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="test"></div>
+    <script
+      type="text/javascript"
+      src="../js/18.3.1/react.development.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="../js/18.3.1/react-dom.development.js"
+    ></script>
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <script type="text/javascript" src="../js/prop-types.js"></script>
+
+    <script type="text/babel">
+      /*
+      react新生命周期和旧生命周期相比，废弃了三个生命周期函数，新增了两个生命周期函数
+        废弃的三个生命周期函数：
+          componentWillMount
+          componentWillReceiveProps
+          componentWillUpdate
+
+        新增的两个生命周期函数：
+          getDerivedStateFromProps
+          getSnapshotBeforeUpdate
+
+      getDerivedStateFromProps
+      作用：在render之前调用，并且在组件创建和更新时都会被调用
+      */
+     
+
+      /*
+        1. 初始化阶段：由ReactDOM.render()触发---初次渲染
+            1. constructor()
+            2. getDerivedStateFromProps
+            3. render()
+            4. componentDidMount()
+        2. 更新阶段：由组件内部this.setState()或父组件重新render触发
+            1. getDerivedStateFromProps
+            2. shouldComponentUpdate()
+            3. render()
+            4. getSnapshotBeforeUpdate
+            5. componentDidUpdate()
+        3. 卸载组件：由ReactDOM.unmountComponentAtNode()触发
+            1. componentWillUnmount()
+      */
+      class Count extends React.Component {
+        // 构造器
+        constructor(props) {
+          super(props);
+          console.log("count-constructor");
+          // 初始化状态
+          this.state = { count: 0 };
+        }
+
+        add = () => {
+          const { count } = this.state;
+          this.setState({ count: count + 1 });
+        };
+        death = () => {
+          ReactDOM.unmountComponentAtNode(document.getElementById("test"));
+        };
+        force = () => {
+          this.forceUpdate();
+        };
+        // 必须加static，因为生命周期函数没有this，所以需要用static来绑定this
+        // 必须返回一个状态对象或者null，不能返回undefined
+        // 若state的值在任何时候都取决于props，那么可以使用这个静态方法，在getDerivedStateFromProps中根据props来更新state
+        static getDerivedStateFromProps(props, state) {
+          console.log("getDerivedStateFromProps", props, state);
+          return null;
+        }
+
+        // 在更新之前获取快照
+        // 必须返回一个值（字符串、数组、数字、对象...），或者null，不能返回undefined
+        // 在componentDidUpdate之前调用，返回值会作为参数传递给componentDidUpdate
+        getSnapshotBeforeUpdate() {
+          console.log("getSnapshotBeforeUpdate");
+          return 'abc'
+        }
+        // 更新完成之后
+        componentDidUpdate(prevProps, prevState, snapshotValue) {
+          console.log("componentDidUpdate", prevProps, prevState, snapshotValue);
+        }
+
+
+        render() {
+          console.log("count-render");
+          const { count } = this.state;
+          return (
+            <div>
+              <h2>当前求和为：{count}</h2>
+              <button onClick={this.add}>点我+1</button>
+              <button onClick={this.death}>卸载组件</button>
+              <button onClick={this.force}>不更改任何数据状态强制更新</button>
+            </div>
+          );
+        }
+      }
+
+      // 父组件A
+      class A extends React.Component {
+        state = { carName: "奔驰" };
+        changeCar = () => {
+          this.setState({ carName: "奥拓" });
+        };
+        render() {
+          return (
+            <div>
+              <div>我是A组件</div>
+              <button onClick={this.changeCar}>换车</button>
+              <B carName={this.state.carName} />
+            </div>
+          );
+        }
+      }
+      // 子组件B
+      class B extends React.Component {
+        render() {
+          return <div>我是B组件，接收到的车是{this.props.carName}</div>;
+        }
+      }
+      ReactDOM.render(<Count  count="109"/>, document.getElementById("test"));
+    </script>
+  </body>
+</html>
