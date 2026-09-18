@@ -111,4 +111,13 @@ npm create vite@latest my-app -- --template react
 3. 实现动态组件
   3.1 动态显示初始化数据 -->
 
+样式文件命名index.modules.css
+import welcome from "./index.module.css";
+<h1 className={welcome.title}>Welcome to the app</h1>
+
+插件：ES7+ React/Redux/React-Native snippets
+rcc + tab：react class component
+rfc + tab：react function component
+
+
 
