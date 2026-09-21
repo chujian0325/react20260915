@@ -1,8 +1,26 @@
 import React, { Component } from "react";
-
+import Pubsub from "pubsub-js";
 export default class SearchList extends Component {
+  state = {
+    users: [], //初始化状态，user初始值为数组
+    isFirst: true, //是否第一次进入页面
+    isLoading: false, //是否正在加载中
+    err: "", //保存错误信息
+  };
+
+  componentDidMount() {
+    // 订阅消息
+    this.token = Pubsub.subscribe("search", (msg, data) => {
+      console.log('List组件收到消息', data);
+      this.setState(data);
+    });
+  }
+
+  componentWillUnmount() {
+    Pubsub.unsubscribe(this.token); //取消订阅
+  }
   render() {
-    const { users, isLoading, isFirst, err } = this.props;
+    const { users, isLoading, isFirst, err } = this.state;
     return (
       <div>
         <div className="row">
