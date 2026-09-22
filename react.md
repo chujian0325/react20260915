@@ -122,7 +122,7 @@ rfc + tab：react function component
 npm install prop-types
 
 
-todoList案例相关知识点：
+## 一、todoList案例相关知识点：
 1. 拆分组件、实现静态组件，注意className的写法，style的写法
 2. 动态初始化列表，如何确定将数据放在哪个组件的state中？
   - 某个组件使用：放在自身的state中
@@ -143,7 +143,7 @@ todoList案例相关知识点：
   3. PubSub.publish('delete', data) //发布消息
 
 
-github搜索案例相关知识点：
+## 二、github搜索案例相关知识点：
 1. 设计状态时要考虑全面，例如带有网络请求的组件，要考虑请求失败怎么办
 2. ES6小知识：结构赋值+重命名
    let obj = {a: { b:1 }} 
@@ -164,10 +164,11 @@ github搜索案例相关知识点：
   }
 
 
+
+
+## 三、路由的基本使用：
 React路由
 npm install react-router-dom
-
-路由的基本使用：
 1. 明确好界面中的导航区、展示区
 2. 导航区的a标签改为Link标签
   <Link to='/xxx'>Demo</Link>
@@ -178,6 +179,31 @@ npm install react-router-dom
     <Route path="/about" element={<About />} />
   </Routes>
 4. <App>的最外侧包裹了一个<BrowserRouter>或<HashRouter>
+
+## 四、路由组件与一般组件：
+1. 写法不同：
+  一般组件：<Demo />
+  路由组件：<Route path="/demo" element={<Demo />} />
+2. 存放位置不同：
+  一般组件：components文件夹
+  路由组件：pages文件夹
+3. 接收到的props不同：
+  一般组件：写组件标签时传递了什么，就能收到什么
+  路由组件：接收到三个固定的属性
+      history:
+          go: ƒ go(n)
+          goBack: ƒ goBack()
+          goForward: ƒ goForward()
+          push: ƒ push(path, state)
+          replace: ƒ replace(path, state)
+      location:
+          pathname: "/about"
+          search: ""
+          state: undefined
+      match:
+          params: {}
+          path: "/about"
+          url: "/about"
 
 
 
