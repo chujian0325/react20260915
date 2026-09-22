@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Link, Routes, Route } from "react-router-dom";
+import { NavLink, Routes, Route } from "react-router-dom";
 import axios from "axios";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -23,12 +23,22 @@ export default class App extends Component {
                 </a> */}
 
                 {/* 在React中，靠路由链接实现切换组件，编写路由链接 */}
-                <Link className="list-group-item" to="/about">
+                <NavLink
+                  className={({ isActive }) =>
+                    `list-group-item ${isActive ? "activeStyle" : ""}`
+                  }
+                  to="/about"
+                >
                   About
-                </Link>
-                <Link className="list-group-item" to="/home">
+                </NavLink>
+                <NavLink
+                  className={({ isActive }) =>
+                    `list-group-item ${isActive ? "activeStyle" : ""}`
+                  }
+                  to="/home"
+                >
                   Home
-                </Link>
+                </NavLink>
               </div>
             </div>
             <div className="col-xs-6">

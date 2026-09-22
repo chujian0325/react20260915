@@ -9,6 +9,11 @@ html {
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
 }
+.activeStyle {
+  /* 需要提升权重 */
+  background-color: orange !important; 
+  color: #fff;
+}
 body {
   margin: 0;
 }
