@@ -164,3 +164,20 @@ github搜索案例相关知识点：
   }
 
 
+React路由
+npm install react-router-dom
+
+路由的基本使用：
+1. 明确好界面中的导航区、展示区
+2. 导航区的a标签改为Link标签
+  <Link to='/xxx'>Demo</Link>
+3. 展示区写Route标签进行路径的匹配
+  {/* 所有Route必须包在Routes里面 */}
+  <Routes>
+    <Route path="/home" element={<Home />} />
+    <Route path="/about" element={<About />} />
+  </Routes>
+4. <App>的最外侧包裹了一个<BrowserRouter>或<HashRouter>
+
+
+
