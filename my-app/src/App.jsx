@@ -1,8 +1,9 @@
 import { Component } from "react";
-import { NavLink, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 import Home from "./pages/Home";
 import About from "./pages/About";
+import MyNavlink from "./components/MyNavLink";
 import RouterHeader from "./components/RouterHeader";
 import "./bootstrap2.css";
 export default class App extends Component {
@@ -23,7 +24,7 @@ export default class App extends Component {
                 </a> */}
 
                 {/* 在React中，靠路由链接实现切换组件，编写路由链接 */}
-                <NavLink
+                {/* <NavLink
                   className={({ isActive }) =>
                     `list-group-item ${isActive ? "activeStyle" : ""}`
                   }
@@ -38,7 +39,10 @@ export default class App extends Component {
                   to="/home"
                 >
                   Home
-                </NavLink>
+                </NavLink> */}
+                {/* 封装组件 */}
+                <MyNavlink to="/home">Home</MyNavlink>
+                <MyNavlink to="/about">About</MyNavlink>
               </div>
             </div>
             <div className="col-xs-6">

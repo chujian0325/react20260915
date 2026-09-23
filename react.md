@@ -205,5 +205,20 @@ npm install react-router-dom
           path: "/about"
           url: "/about"
 
+## 五、NavLink与封装MyNavLink：
+1. NavLink可以实现路由链接的高亮，通过isActive指定样式名
+```jsx
+<NavLink
+  className={({ isActive }) =>
+    `list-group-item ${isActive ? "activeStyle" : ""}`
+  }
+  to={to}
+  {...this.props}
+>
+  {/* {this.props.children} */}
+</NavLink>
+```
+2. 标签体内容是一个特殊的标签属性
+3. 通过this.props.children可以获取标签体内容
 
 
