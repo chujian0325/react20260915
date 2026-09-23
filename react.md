@@ -299,36 +299,67 @@ function App() {
 
 
 ## 十、嵌套路由
-1. **父路由有子 Route 嵌套 → 父 path 末尾必须 `/*`**
-2. 子路由 path 写**相对路径**，不要写完整 `/home/list`，直接 `list`
-3. Outlet 组件：父路由的组件，一般作为容器组件，用于展示子路由组件
+（1）配置嵌套路由
+嵌套路由的核心是 “在父Route中嵌套子Route”，并通过Outlet组件指定子组件的展示位置：
+
 父
 ```jsx
+// App.jsx中配置产品相关的嵌套路由
+import Products from './pages/Products';
+import ProductDetails from './pages/Products/ProductDetails';
+import NewProduct from './pages/Products/NewProduct';
+
 <Routes>
-  <Route path="/home/*" element={<Home />} />
-  <Route path="/about" element={<About />} />
+  {/* 其他路由... */}
+  {/* 父路由：path为/products，对应Products组件 */}
+  <Route path="/products" element={<Products />}>
+    {/* 子路由：路径是相对路径（无需加/products前缀） */}
+    <Route path=":productId" element={<ProductDetails />} /> {/* 产品详情：/products/1 */}
+    <Route path="new" element={<NewProduct />} /> {/* 新增产品：/products/new */}
+  </Route>
 </Routes>
+
+
 ```
 
-子
+（2）用 Outlet 指定子组件位置
+父组件（Products）中需要通过Outlet组件定义 “子组件在哪里展示”，类似 “占位符”：
 ```jsx
-<div>
-  <h3>我是Home内容</h3>
-  <ul className="nav nav-tabs">
-    <li>
-      <MyNavLink to="/home/news">News</MyNavLink>
-    </li>
-    <li>
-      <MyNavLink to="/home/message">Message</MyNavLink>
-    </li>
-  </ul>
-  {/* 注册路由 */}
-  <Routes>
-    <Route path="/news" element={<News />} />
-    <Route path="/message" element={<Message />} />
-    <Route path="*" element={<Navigate to="/home/news" replace />} />
-  </Routes>
-</div>
+// src/pages/Products.jsx
+import { Outlet } from 'react-router-dom';
+
+const Products = () => {
+  return (
+    <div>
+      <h1>产品列表（父页面）</h1>
+      {/* 子路由对应的组件会在这里展示 */}
+      <Outlet />
+    </div>
+  );
+};
+
+export default Products;
+
+```
+（3）子组件实现
+子组件（ProductDetails和NewProduct）只需正常定义，无需特殊配置：
+```jsx
+// src/pages/Products/ProductDetails.jsx
+import { useParams } from 'react-router-dom';
+
+const ProductDetails = () => {
+  const { productId } = useParams(); // 获取产品ID
+  return <p>产品详情：ID={productId}</p>;
+};
+
+export default ProductDetails;
+
+// src/pages/Products/NewProduct.js
+const NewProduct = () => {
+  return <p>新增产品表单</p>;
+};
+
+export default NewProduct;
 ```
 
 ## 十一、路由传参
@@ -345,3 +376,5 @@ function App() {
       ```jsx
       const { id, title } = useParams()
       ```
+
+
