@@ -245,3 +245,33 @@ v6正确写法
 2. public/index.html中引入样式时不写./写%PUBLIC_URL%
 3. 使用HashRouter
 
+
+## 八、路由的严格匹配与模糊匹配：
+1. 默认使用的是模糊匹配（简单记：【输入的路径】必须包含要访问的路径，且顺序要一致）
+2. 开启严格匹配：<Route exact={true} path="/about" component={About} />
+```jsx
+{/* v5 需要写 exact 才是精确匹配 */}
+<Switch>
+  <Route exact path="/" component={Home}/>
+  <Route path="/about" component={About}/>
+</Switch>
+
+```
+
+```jsx
+import { Routes, Route } from 'react-router-dom'
+
+<Routes>
+  {/* path="/" 默认精确匹配：只有访问 / 才渲染Home，/xxx 不会匹配到 */}
+  <Route path="/" element={<Home />} />
+  <Route path="/about" element={<About />} />
+  <Route path="/user/:id" element={<User />} />
+  {/* path="*" 通配，匹配所有剩下的URL，用来做404 */}
+  <Route path="*" element={<NotFound />} />
+</Routes>
+
+```
+3. 严格匹配不要随便开启，需要时再开启，有些时候开启会导致无法继续匹配二级路由
+
+
+
