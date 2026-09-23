@@ -301,6 +301,7 @@ function App() {
 ## 十、嵌套路由
 1. **父路由有子 Route 嵌套 → 父 path 末尾必须 `/*`**
 2. 子路由 path 写**相对路径**，不要写完整 `/home/list`，直接 `list`
+3. Outlet 组件：父路由的组件，一般作为容器组件，用于展示子路由组件
 父
 ```jsx
 <Routes>
@@ -329,3 +330,18 @@ function App() {
   </Routes>
 </div>
 ```
+
+## 十一、路由传参
+1. **params 传参**
+   1. 路由链接（携带参数）：
+      ```jsx
+      <Link to={`/home/message/detail/${msgObj.id}/${msgObj.title}`}>{msgObj.title}</Link>
+      ```
+   2. 注册路由（声明接收）：
+      ```jsx
+      <Route path="/home/message/detail/:id" element={<Detail />} />
+      ```
+   3. 接收参数：
+      ```jsx
+      const { id, title } = useParams()
+      ```

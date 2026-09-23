@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Outlet } from "react-router-dom";
 import MyNavLink from "../../components/MyNavLink";
 import Message from "./Message";
 import News from "./News";
@@ -19,12 +19,7 @@ export default class Home extends Component {
             <MyNavLink to="/home/message">Message</MyNavLink>
           </li>
         </ul>
-        {/* 注册路由 */}
-        <Routes>
-          <Route path="/news" element={<News />} />
-          <Route path="/message" element={<Message />} />
-          <Route path="*" element={<Navigate to="/home/news" replace />} />
-        </Routes>
+        <Outlet></Outlet>
       </div>
     );
   }

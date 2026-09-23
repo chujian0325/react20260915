@@ -3,6 +3,9 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import axios from "axios";
 import Home from "./pages/Home";
 import About from "./pages/About";
+import News from "./pages/Home/News";
+import Message from "./pages/Home/Message";
+import DetailWrapper from './pages/Home/Message/Detail'
 
 import MyNavlink from "./components/MyNavLink";
 import RouterHeader from "./components/RouterHeader";
@@ -51,9 +54,22 @@ export default class App extends Component {
                 <div className="panel-body">
                   {/* 注册路由 */}
                   {/* 所有Route必须包在Routes里面 */}
+
+                  {/* 注册路由 */}
+                  {/* Routes只写一次，写在App.jsx里面 */}
                   <Routes>
-                    <Route path="/home/*" element={<Home />} />
+                    {/* 有二级路由时，父路由要写*， */}
+                    <Route path="/home/*" element={<Home />}>
+                      <Route path="news" element={<News />} />
+                      <Route path="message/*" element={<Message />}>
+                        <Route path="detail/:id" element={<DetailWrapper />} />
+                      </Route>
+                    </Route>
                     <Route path="/about" element={<About />} />
+                    <Route
+                      path="*"
+                      element={<Navigate to="/home/news" replace />}
+                    />
                   </Routes>
                 </div>
               </div>
