@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import axios from "axios";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -42,8 +42,8 @@ export default class App extends Component {
                   Home
                 </NavLink> */}
                 {/* 封装组件 */}
-                <MyNavlink to="/demo/home">Home</MyNavlink>
-                <MyNavlink to="/demo/about">About</MyNavlink>
+                <MyNavlink to="/home">Home</MyNavlink>
+                <MyNavlink to="/about">About</MyNavlink>
               </div>
             </div>
             <div className="col-xs-6">
@@ -52,8 +52,9 @@ export default class App extends Component {
                   {/* 注册路由 */}
                   {/* 所有Route必须包在Routes里面 */}
                   <Routes>
-                    <Route path="/demo/home" element={<Home />} />
-                    <Route path="/demo/about" element={<About />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="*" element={<Navigate to="/home" replace />} />
                   </Routes>
                 </div>
               </div>

@@ -274,4 +274,27 @@ import { Routes, Route } from 'react-router-dom'
 3. 严格匹配不要随便开启，需要时再开启，有些时候开启会导致无法继续匹配二级路由
 
 
+## 九、重定向：
+`Redirect` 是 **react-router v5** 的组件，**v6 已经移除了 `Redirect`，不再支持直接 import Redirect**
+```jsx
+import { Routes, Route, Navigate } from 'react-router-dom'
+
+function App() {
+  return (
+    <Routes>
+      {/* 访问 / 直接重定向到 /home */}
+      <Route path="/" element={<Navigate to="/home" replace />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="*" element={<Navigate to="/404" replace />} />
+      <Route path="/404" element={<NotFound />} />
+    </Routes>
+  )
+}
+```
+
+** 重点区分
+1. `replace={true}`：**替换当前历史记录**（推荐做路由重定向，对应旧 Redirect）
+2. 不写 replace / `replace={false}`：会新增一条浏览历史，点击返回会回到上一个地址
+
+
 
