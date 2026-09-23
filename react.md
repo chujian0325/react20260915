@@ -221,4 +221,27 @@ npm install react-router-dom
 2. 标签体内容是一个特殊的标签属性
 3. 通过this.props.children可以获取标签体内容
 
+## 六、Switch的使用：（`Switch` 是 react-router v5 的组件，v6 已经移除，替换成 `<Routes>`）
+1.通常情况下，path和component是一一对应的关系。
+2.Switch可以提高路由匹配效率（单一匹配）
+旧v5
+```jsx
+<Switch>
+  <Route path="/" component={Home} />
+  <Route path="/about" component={About} />
+</Switch>
+
+```
+v6正确写法
+```jsx
+<Routes>
+  <Route path="/" element={<Home />} />
+  <Route path="/about" element={<About />} />
+</Routes>
+```
+
+## 七、解决多级路径刷新页面样式丢失的问题：
+1. public/index.html中引入样式时不写./写/
+2. public/index.html中引入样式时不写./写%PUBLIC_URL%
+3. 使用HashRouter
 

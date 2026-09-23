@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 import Home from "./pages/Home";
 import About from "./pages/About";
+
 import MyNavlink from "./components/MyNavLink";
 import RouterHeader from "./components/RouterHeader";
 import "./bootstrap2.css";
@@ -41,8 +42,8 @@ export default class App extends Component {
                   Home
                 </NavLink> */}
                 {/* 封装组件 */}
-                <MyNavlink to="/home">Home</MyNavlink>
-                <MyNavlink to="/about">About</MyNavlink>
+                <MyNavlink to="/demo/home">Home</MyNavlink>
+                <MyNavlink to="/demo/about">About</MyNavlink>
               </div>
             </div>
             <div className="col-xs-6">
@@ -51,8 +52,8 @@ export default class App extends Component {
                   {/* 注册路由 */}
                   {/* 所有Route必须包在Routes里面 */}
                   <Routes>
-                    <Route path="/home" element={<Home />} />
-                    <Route path="/about" element={<About />} />
+                    <Route path="/demo/home" element={<Home />} />
+                    <Route path="/demo/about" element={<About />} />
                   </Routes>
                 </div>
               </div>
