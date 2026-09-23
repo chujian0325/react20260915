@@ -52,9 +52,8 @@ export default class App extends Component {
                   {/* 注册路由 */}
                   {/* 所有Route必须包在Routes里面 */}
                   <Routes>
-                    <Route path="/home" element={<Home />} />
+                    <Route path="/home/*" element={<Home />} />
                     <Route path="/about" element={<About />} />
-                    <Route path="*" element={<Navigate to="/home" replace />} />
                   </Routes>
                 </div>
               </div>

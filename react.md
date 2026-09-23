@@ -298,3 +298,34 @@ function App() {
 
 
 
+## 十、嵌套路由
+1. **父路由有子 Route 嵌套 → 父 path 末尾必须 `/*`**
+2. 子路由 path 写**相对路径**，不要写完整 `/home/list`，直接 `list`
+父
+```jsx
+<Routes>
+  <Route path="/home/*" element={<Home />} />
+  <Route path="/about" element={<About />} />
+</Routes>
+```
+
+子
+```jsx
+<div>
+  <h3>我是Home内容</h3>
+  <ul className="nav nav-tabs">
+    <li>
+      <MyNavLink to="/home/news">News</MyNavLink>
+    </li>
+    <li>
+      <MyNavLink to="/home/message">Message</MyNavLink>
+    </li>
+  </ul>
+  {/* 注册路由 */}
+  <Routes>
+    <Route path="/news" element={<News />} />
+    <Route path="/message" element={<Message />} />
+    <Route path="*" element={<Navigate to="/home/news" replace />} />
+  </Routes>
+</div>
+```
