@@ -391,5 +391,22 @@ export default NewProduct;
       const [params] = URLSearchParams.parse(search)
       ```
     备注：获取到的 search 是urlencoded编码字符串，需要借助 querystring 库解析。
-      
+3. **state 传参**
+state 是**隐式参数**，不会出现在 URL 上，刷新页面后**会丢失**(清除缓存后就丢失了)！
+   1. 路由链接（携带参数）：
+      ```jsx
+      <Link to={{ pathname: '/home/message/detail', state: { id: msgObj.id, title: msgObj.title } }}>{msgObj.title}</Link>
+      ```
+   2. 注册路由（无需声明，正常注册即可）：
+      ```jsx
+      <Route path="/home/message/detail" element={<Detail />} />
+      ```
+   3. 接收参数：
+      ```jsx
+      const { state } = useLocation()
+  
+      ```
+总结
+**state：刷新页面直接消失（存内存）**
+**params、search：刷新页面还在（存在 URL 地址栏）**
 

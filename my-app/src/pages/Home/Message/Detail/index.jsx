@@ -9,17 +9,12 @@ const data = [
 class Detail extends Component {
   render() {
     console.log("Detail444", this.props);
-    const { id } = this.props.params;
-    const search = qs.parse(this.props.location.search.substring(1));
-    console.log("search", search);
-
-
-    const obj = data.find((item) => item.id === search.id);
+    const obj = data.find((item) => item.id === this.props.location.state.id);
     const { content } = obj;
     return (
       <ul>
-        <li>id: {search.id}</li>
-        <li>title: {search.title}</li>
+        <li>id: {this.props.location.state.id}</li>
+        <li>title: {this.props.location.state.title}</li>
         <li>content: {content}</li>
       </ul>
     );
@@ -31,7 +26,7 @@ function DetailWrapper() {
   const params = useParams();
   const location = useLocation();
   console.log("DetailWrapper", params, location);
-  return <Detail params={params} location={location}/>;
+  return <Detail params={params} location={location} />;
 }
 
 export default DetailWrapper;
