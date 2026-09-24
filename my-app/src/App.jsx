@@ -8,14 +8,14 @@ import MessageWrapper from "./pages/Home/Message";
 import DetailWrapper from './pages/Home/Message/Detail'
 
 import MyNavlink from "./components/MyNavLink";
-import RouterHeader from "./components/RouterHeader";
+import RouterHeaderWrapper from "./components/RouterHeader";
 import "./bootstrap2.css";
 export default class App extends Component {
   render() {
     return (
       <div>
         <div>
-          <RouterHeader />
+          <RouterHeaderWrapper />
           <div className="row">
             <div className="col-xs-2 col-xs-offset-2">
               <div className="list-group">
