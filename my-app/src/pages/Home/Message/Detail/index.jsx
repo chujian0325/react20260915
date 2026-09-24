@@ -9,12 +9,13 @@ const data = [
 class Detail extends Component {
   render() {
     console.log("Detail444", this.props);
-    const obj = data.find((item) => item.id === this.props.location.state.id);
+    const { id ,title} = this.props.params;
+    const obj = data.find((item) => item.id === id);
     const { content } = obj;
     return (
       <ul>
-        <li>id: {this.props.location.state.id}</li>
-        <li>title: {this.props.location.state.title}</li>
+        <li>id: {id}</li>
+        <li>title: {title}</li>
         <li>content: {content}</li>
       </ul>
     );

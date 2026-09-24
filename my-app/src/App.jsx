@@ -4,7 +4,7 @@ import axios from "axios";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import News from "./pages/Home/News";
-import Message from "./pages/Home/Message";
+import MessageWrapper from "./pages/Home/Message";
 import DetailWrapper from './pages/Home/Message/Detail'
 
 import MyNavlink from "./components/MyNavLink";
@@ -61,8 +61,8 @@ export default class App extends Component {
                     {/* 有二级路由时，父路由要写*， */}
                     <Route path="/home/*" element={<Home />}>
                       <Route path="news" element={<News />} />
-                      <Route path="message/*" element={<Message />}>
-                        <Route path="detail/" element={<DetailWrapper />} />
+                      <Route path="message/*" element={<MessageWrapper />}>
+                        <Route path="detail/:id/:title" element={<DetailWrapper />} />
                       </Route>
                     </Route>
                     <Route path="/about" element={<About />} />
