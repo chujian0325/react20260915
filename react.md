@@ -376,5 +376,20 @@ export default NewProduct;
       ```jsx
       const { id, title } = useParams()
       ```
-
+2. **search 传参**
+   1. 路由链接（携带参数）：
+      ```jsx
+      <Link to={`/home/message/detail/?id=${msgObj.id}&title=${msgObj.title}`}>{msgObj.title}</Link>
+      ```
+   2. 注册路由（无需声明，正常注册即可）：
+      ```jsx
+      <Route path="/home/message/detail" element={<Detail />} />
+      ```
+   3. 接收参数：
+      ```jsx
+      const search = useLocation().search
+      const [params] = URLSearchParams.parse(search)
+      ```
+    备注：获取到的 search 是urlencoded编码字符串，需要借助 querystring 库解析。
+      
 

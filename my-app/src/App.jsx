@@ -62,7 +62,7 @@ export default class App extends Component {
                     <Route path="/home/*" element={<Home />}>
                       <Route path="news" element={<News />} />
                       <Route path="message/*" element={<Message />}>
-                        <Route path="detail/:id" element={<DetailWrapper />} />
+                        <Route path="detail/" element={<DetailWrapper />} />
                       </Route>
                     </Route>
                     <Route path="/about" element={<About />} />

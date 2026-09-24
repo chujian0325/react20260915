@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
+import qs from "querystring";
 const data = [
   { id: "01", content: "你好，北京" },
   { id: "02", content: "你好上海" },
@@ -7,14 +8,19 @@ const data = [
 ];
 class Detail extends Component {
   render() {
-    console.log("Detail", this.props);
+    console.log("Detail444", this.props);
     const { id } = this.props.params;
-    const obj = data.find((item) => item.id === id);
+    const search = qs.parse(this.props.location.search.substring(1));
+    console.log("search", search);
+
+
+    const obj = data.find((item) => item.id === search.id);
     const { content } = obj;
     return (
       <ul>
-        <li>id: {id}</li>
-        <li>title: {content}</li>
+        <li>id: {search.id}</li>
+        <li>title: {search.title}</li>
+        <li>content: {content}</li>
       </ul>
     );
   }
@@ -23,7 +29,9 @@ class Detail extends Component {
 // 包装高阶层：函数组件，调用hook拿到params
 function DetailWrapper() {
   const params = useParams();
-  return <Detail params={params} />;
+  const location = useLocation();
+  console.log("DetailWrapper", params, location);
+  return <Detail params={params} location={location}/>;
 }
 
 export default DetailWrapper;
