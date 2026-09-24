@@ -30,6 +30,7 @@ export default class Message extends Component {
                 <Link
                   to={`/home/message/detail`}
                   state={{ id: message.id, title: message.title }}
+                  replace
                 >
                   {message.title}
                 </Link>
