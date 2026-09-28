@@ -559,5 +559,136 @@ redux是什么
 3. 总体原则：能不用就不用，如果不用比较吃力才考虑使用。
 
 
+### 新版：Redux Toolkit（RTK，官方推荐，现在项目优先用这个）
+
+RTK 封装了冗余代码，内置 thunk、devtools，不用手写 action type、reducer 样板代码。
+1. 添加 Redux Toolkit 和 React-Redux 依赖包到你的项目中：
+```bash
+npm install @reduxjs/toolkit react-redux
+```
+
+2. 创建 src/app/store.js 文件。从 Redux Toolkit 引入 configureStore API。我们从创建一个空的 Redux store 开始，并且导出它:
+app/store.js
+```jsx
+import { configureStore } from '@reduxjs/toolkit'
+
+export default configureStore({
+  reducer: {}
+})
+```
+上面代码创建了 Redux store ，并且自动配置了 Redux DevTools 扩展 ，这样你就可以在开发时调试 store。
+
+3. 为 React 提供 Redux Store
+创建 store 后，便可以在 React 组件中使用它。 在 src/index.js 中引入我们刚刚创建的 store , 通过 React-Redux 的 <Provider>将 <App> 包裹起来,并将 store 作为 prop 传入。
+
+index.js
+```jsx
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
+import App from './App'
+import store from './app/store'
+import { Provider } from 'react-redux'
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+)
+```
+4. 创建 Redux State Slice
+创建 src/features/counter/counterSlice.js 文件。在该文件中从 Redux Toolkit 引入 createSlice API。
+
+创建 slice 需要一个字符串名称来标识切片、一个初始 state 以及一个或多个定义了该如何更新 state 的 reducer 函数。slice 创建后 ，我们可以导出 slice 中生成的 Redux action creators 和 reducer 函数。
+
+Redux 要求我们通过创建数据副本和更新数据副本，来实现不可变地写入所有状态更新。不过 Redux Toolkit createSlice 和 createReducer 在内部使用 Immer 允许我们编写“可变”的更新逻辑，变成正确的不可变更新。
+```jsx
+features/counter/counterSlice.js
+import { createSlice } from '@reduxjs/toolkit'
+
+export const counterSlice = createSlice({
+  name: 'counter',
+  initialState: {
+    value: 0 // 初始状态
+  },
+  reducers: {
+    increment: state => {
+      // Redux Toolkit 允许我们在 reducers 写 "可变" 逻辑。它
+      // 并不是真正的改变状态值，因为它使用了 Immer 库
+      // 可以检测到“草稿状态“ 的变化并且基于这些变化生产全新的
+      // 不可变的状态
+      state.value += 1
+    },
+    decrement: state => {
+      state.value -= 1
+    },
+    incrementByAmount: (state, action) => {
+      state.value += action.payload
+    }
+  }
+})
+// 每个 case reducer 函数会生成对应的 Action creators
+export const { increment, decrement, incrementByAmount } = counterSlice.actions
+
+export default counterSlice.reducer
+```
+5. 
+将 Slice Reducers 添加到 Store 中
+下一步，我们需要从计数切片中引入 reducer 函数，并将它添加到我们的 store 中。通过在 reducer 参数中定义一个字段，我们告诉 store 使用这个 slice reducer 函数来处理对该状态的所有更新。
+
+app/store.js
+```jsx
+import { configureStore } from '@reduxjs/toolkit'
+import counterReducer from '../features/counter/counterSlice'
+
+export default configureStore({
+  reducer: {
+    counter: counterReducer // 模块名，reducer名,可以放多个slice
+  }
+})
+```
+6. 在 React 组件中使用 Redux 状态和操作
+现在我们可以使用 React-Redux 钩子让 React 组件与 Redux store 交互。我们可以使用 useSelector 从 store 中读取数据，使用 useDispatch dispatch actions。创建包含 <Counter> 组件的 src/features/counter/Counter.js 文件，然后将该组件导入 App.js 并在 <App> 中渲染它。
+
+features/counter/Counter.js
+```jsx
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { decrement, increment } from './counterSlice'
+import styles from './Counter.module.css'
+
+// 这里要写函数式组件，因为要使用useSelector和useDispatch
+export function Counter() {
+  const count = useSelector(state => state.counter.value)
+  const dispatch = useDispatch()
+
+  return (
+    <div>
+      <div>
+        <button
+          aria-label="Increment value"
+          onClick={() => dispatch(increment())}
+        >
+          Increment
+        </button>
+        <span>{count}</span>
+        <button
+          aria-label="Decrement value"
+          onClick={() => dispatch(decrement())}
+        >
+          Decrement
+        </button>
+      </div>
+    </div>
+  )
+}
+```
+现在，每当你点击”递增“和“递减”按钮。
+
+会 dispatch 对应的 Redux action 到 store
+在计数器切片对应的 reducer 中将看到 action 并更新其状态
+<Counter>组件将从 store 中看到新的状态，并使用新数据重新渲染组件
+
 
 
