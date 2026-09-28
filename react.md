@@ -22,7 +22,7 @@ React高效的原因：
 <script src="https://unpkg.com/prop-types@15.6.2/prop-types.js"></script>
 
 
-```
+```html
 <!doctype html>
 <html lang="en">
   <head>
@@ -529,5 +529,20 @@ export default MessageWrapper;
    - BrowserRouter没有任何影响，因为state保存在history对象中。
    - HashRouter刷新后会导致路由state参数的丢失。
 4. 备注：HashRouter可以用于解决一些路径错误相关的问题。
+
+
+React UI 组件库
+material-ui（国外）
+ant-design（国内蚂蚁金服）
+element-ui（饿了么）https://github.com/elemefe/element-react
+vant（手机端UI组件库，有赞团队维护）https://github.com/3lang3/react-vant
+
+antd的使用
+https://ant.design/docs/react/getting-started-cn
+安装
+npm install antd --save
+在vite中使用
+https://ant.design/docs/react/use-with-vite-cn
+
 
 
