@@ -692,3 +692,10 @@ export function Counter() {
 
 
 
+
+react-rtk
+npm install @reduxjs/toolkit react-redux
+
+
+
+
