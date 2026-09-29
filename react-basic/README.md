@@ -68,6 +68,31 @@ function App() {
 }
 
 ```
+**JSX中实现复杂条件渲染**
+需求：列表中需要根据文章状态适配三种情况：单图、三图、无图三种模式
+解决方案：自定义函数+if判断语句
+```jsx
+// 定义文章类型
+const articleType = 3;
+function getArticleType() {
+  if (articleType === 1) {
+    return <div>我是无图文章</div>;
+  } else if (articleType === 2) {
+    return <div>我是单图模式</div>;
+  } else if (articleType === 3) {
+    return <div>我是三图模式</div>;
+  }
+}
+function App() {
+  return (
+    <div className="App">
+      {/* 调用函数渲染不同模板 */}
+      {getArticleType()}
+    </div>
+  );
+}
+```
+
 
 
 

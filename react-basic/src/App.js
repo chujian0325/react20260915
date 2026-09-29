@@ -1,12 +1,19 @@
-const isLogin = false;
+// 定义文章类型
+const articleType = 3;
+function getArticleType() {
+  if (articleType === 1) {
+    return <div>我是无图文章</div>;
+  } else if (articleType === 2) {
+    return <div>我是单图模式</div>;
+  } else if (articleType === 3) {
+    return <div>我是三图模式</div>;
+  }
+}
 function App() {
   return (
     <div className="App">
-      this is a react app
-      {/* 逻辑与&& */}
-      {isLogin && <h1>hello world</h1>}
-      {/* 三元运算符 */}
-      {isLogin ? <h1>hello world</h1> : <h1>hello react</h1>}
+      {/* 调用函数渲染不同模板 */}
+      {getArticleType()}
     </div>
   );
 }
