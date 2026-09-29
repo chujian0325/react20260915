@@ -31,6 +31,29 @@ JSX并不是标准的JS语法，它是JS的语法糖，最终会被编译成JS�
 
 注意：if语句、switch语句、变量声明属于语句，不是表达式，不能出现在{}中
 
+**JSX中实现列表渲染**
+语法：在JSX中使用原生js的map方法遍历渲染列表
+```jsx
+const list = [
+  { id: 1, name: "Vue" },
+  { id: 2, name: "React" },
+  { id: 3, name: "Angular" },
+];
+function App() {
+  return (
+    <div className="App">
+      {/* 渲染列表，加key */}
+      <ul>
+        {list.map((item) => (
+          <li key={item.id}>{item.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+
 
 
 
