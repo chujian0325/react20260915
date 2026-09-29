@@ -799,3 +799,85 @@ export default Child;
 ```
 
 
+## Mobx的使用
+项目中安装
+1. 先有一个react项目
+```bash
+npm create vite@latest
+```
+2. 安装相应模块（2选1）
+```bash
+npm install mobx mobx-react #支持函数组件和类组件
+npm install mobx mobx-react-lite #只支持函数组件（本项目选择这个）
+```
+
+如何组织代码
+state  状态  数据
+action 动作  操作数据的方法
+```jsx
+import { makeAutoObservable } from "mobx";
+import { observer } from "mobx-react-lite";
+class User {
+  // 状态（成员属性）
+  name = "张三";
+  age = 18;
+
+  constructor(name, age) {
+    // makeAutoObservable(this); //可以把对象转为可以被观察的对象，如果组件中要用解构，必须设置autoBind为true
+    makeAutoObservable(this, {}, { autoBind: true });
+  }
+
+  // 动作（成员方法）
+  // 计算出生年份
+  // computed计算属性
+  getBronYear() {
+    return new Date().getFullYear() - this.age;
+  }
+  changeName(newName) {
+    this.name = newName;
+  }
+
+  increaseAge() {
+    this.age += 1;
+  }
+
+  decreaseAge() {
+    this.age -= 1;
+  }
+}
+// 得到一个可以被观察的对象
+const user = new User("李四", 20);
+// 创建一个有观察能力的组件
+const MyComponent = observer(({ store }) => {
+  console.log("store", store);
+  const { name, age, changeName, increaseAge, decreaseAge, getBronYear } =
+    store;
+  return (
+    <>
+      <h1>姓名：{store.name}</h1>
+      <h1>年龄：{store.age}</h1>
+      <button onClick={() => store.changeName("王五")}>修改姓名</button>
+      <button onClick={() => store.increaseAge()}>增加年龄</button>
+      <button onClick={() => store.decreaseAge()}>减少年龄</button>
+      <hr />
+      <h1>姓名：{name}</h1>
+      <h1>年龄：{age}</h1>
+      <h1>出生年份：{getBronYear()}</h1>
+      <button onClick={() => changeName("王五")}>修改姓名</button>
+      <button onClick={() => increaseAge()}>增加年龄</button>
+      <button onClick={() => decreaseAge()}>减少年龄</button>
+    </>
+  );
+});
+function App() {
+  return (
+    <>
+      <h1>哈哈哈</h1>
+      <MyComponent store={user} />
+    </>
+  );
+}
+
+export default App;
+```
+
