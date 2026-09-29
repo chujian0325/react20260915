@@ -697,5 +697,105 @@ react-rtk
 npm install @reduxjs/toolkit react-redux
 
 
+所谓切片：就是初始数据以及操作数据的方法，一个切片就是一个reducer
+1. 创建切片
+```jsx
+// 创建用户切片
+import { createSlice } from "@reduxjs/toolkit";
+
+const userSlice = createSlice({
+  name: "user-slice",// 切片名称
+  initialState: {
+    // 初始数据
+    name: "张三",
+    gender: "男",
+    age: 18,
+  },
+  reducers: {
+    //定义操作数据的方法
+    setName(state, action) {
+      //action.type是执行的动作， action.payload是传递的数据
+
+      // Redux Toolkit允许我们在reducers写”可变“逻辑，它并不是真正的改变状态值，因为它使用了Immer库，可以检测到”草稿状态“的变化，并且基于这些变化产生全新的不可变的状态
+      //   return {
+      //     ...state,
+      //     name: action.payload,
+      //   };
+      // 简写
+      state.name = action.payload;
+    },
+    setGender(state, action) {
+      state.gender = action.payload;
+    },
+    setAge(state, action) {
+      state.age = action.payload;
+    },
+  },
+});
+export default userSlice;
+
+```
+2. 在store中引入切片
+```jsx
+// 创建store，对切片进行统一管理
+import { configureStore } from "@reduxjs/toolkit";
+
+import userSlice from "./user";
+import goodsSlice from "./goods";
+
+const store = configureStore({
+  reducer: {
+    user: userSlice.reducer,
+    goods: goodsSlice.reducer,
+  },
+});
+
+export default store;
+
+```
+3. main.jsx中配置store
+```jsx
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import App from './App.jsx'
+import {Provider} from 'react-redux'
+import store from './stores/index.js'
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </StrictMode>,
+)
+
+```
+4. 在组件中引入useSelector和useDispatch
+```jsx
+import { useSelector, useDispatch } from "react-redux";
+import userSlice from "./stores/user.js";
+
+const { setAge } = userSlice.actions;
+// setAge(user.age + 1) = {type: "user-slice/setAge", payload: user.age + 1};
+const Child = () => {
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  return (
+    <>
+      <h1>子组件-- {JSON.stringify(user)}</h1>
+      <button
+        onClick={() =>
+          dispatch({ type: "user-slice/setAge", payload: user.age + 1 })
+        }
+      >
+        增加
+      </button>
+      {/*简化写法*/}
+      <button onClick={() => dispatch(setAge(user.age + 1))}>增加</button>
+    </>
+  );
+};
+
+export default Child;
+```
 
 
