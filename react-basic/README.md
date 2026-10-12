@@ -408,3 +408,45 @@ const App = () => {
 export default App;
 
 ```
+
+# 十二、useEffect
+useEffect是React Hook函数，用于React组件中创建不是由事件引起而是由渲染本身引起的操作，比如：数据获取、订阅或者手动更改DOM等
+
+需求：组件渲染完毕后，立刻从服务器获取数据并显示在页面上
+语法：
+useEffect(() => {
+  
+}, [])
+参数1是一个函数，可以把它叫做副作用函数，在函数内可以放置要执行的操作
+参数2是一个数组（可选参数），数组中的元素是useEffect依赖的数据，当数组中的数据发生变化时，useEffect会重新执行，如果数组为空，则useEffect只会在组件渲染完毕后执行一次
+```jsx
+import { useEffect, useState } from "react";
+const Url = "https://geek.itheima.net/v1_0/channels";
+
+const App = () => {
+  const [list, setList] = useState([]);
+  useEffect(() => {
+    // 获取数据
+    async function getData() {
+      const res = await fetch(Url);
+      const list = await res.json();
+      console.log(list);
+      setList(list.data.channels);
+    }
+    getData();
+  }, []);
+
+  return (
+    <div>
+      this is app
+      <ul>
+        {list.map((item) => (
+          <li key={item.id}>{item.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+```
+
