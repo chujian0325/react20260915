@@ -259,6 +259,18 @@ function App() {
 
 ```
 
+# 七、组件的样式处理
+**组件基础样式方案**
+React组件基础的样式控制有两种：
+1. 行内样式（不推荐）
+```jsx
+<div style={{color:'red';fontSize:'20px'}}>this is a div</div>
+```
+2. class类名控制
+```jsx
+<span className="foo">this is a span</span>
+```
+
 
 
 
