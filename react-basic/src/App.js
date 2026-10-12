@@ -1,8 +1,9 @@
 import "./App.scss";
 import avatar from "./images/bozai.png";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import _ from "lodash";
 import classNames from "classnames";
+
 /**
  * 评论列表的渲染和操作
  *
@@ -96,6 +97,24 @@ const App = () => {
     }
   }
 
+  const [newComment, setNewComment] = useState("");
+  const handlePublish = () => {
+    setCommentList([
+      ...commentList,
+      {
+        rpid: Date.now(),
+        user: {
+          uid: user.uid,
+          avatar: "",
+          uname: user.uname,
+        },
+        content: newComment,
+        ctime: "11-13 11:29",
+        like: 0,
+      }
+    ])
+  }
+
   return (
     <div className="app">
       {/* 导航 Tab */}
@@ -141,10 +160,14 @@ const App = () => {
             <textarea
               className="reply-box-textarea"
               placeholder="发一条友善的评论"
+              value={newComment}
+              onChange={(e) => {
+                setNewComment(e.target.value);
+              }}
             />
             {/* 发布按钮 */}
             <div className="reply-box-send">
-              <div className="send-text">发布</div>
+              <div className="send-text" onClick={handlePublish}>发布</div>
             </div>
           </div>
         </div>
