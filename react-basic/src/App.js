@@ -1,29 +1,23 @@
-// 父传子
+import { useState } from "react";
 function Son(props) {
-  // props：包含父组件传递过来的所有数据
   return (
     <div>
-      this is son，{props.name}，JSX:{props.child},{props.children}
+      this is son
+      <button onClick={() => props.onGetSonMsg("hello")}>sendMsg</button>
     </div>
   );
 }
 const App = () => {
-  const name = "this is a app name";
+  const getMsg = (msg) => {
+    console.log(msg);
+    setMsg(msg);
+  };
+  const [msg, setMsg] = useState("");
   return (
     <div>
-      <Son
-        name={name}
-        age={20}
-        isTrue={false}
-        child={<div>this is a children</div>}
-        list={["vue", "react"]}
-        cb={() => {
-          console.log("this is a callback");
-        }}
-        obj={{ name: "this is a obj name" }}
-      >
-        <span>this is a span</span>
-      </Son>
+      this is app,{msg}
+      {/* 父组件通过props将函数传递给子组件 */}
+      <Son onGetSonMsg={getMsg}></Son>
     </div>
   );
 };
