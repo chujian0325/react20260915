@@ -3,6 +3,8 @@ import avatar from "./images/bozai.png";
 import { useState, useRef } from "react";
 import _ from "lodash";
 import classNames from "classnames";
+import { v4 as uuidv4 } from "uuid";
+import dayjs  from 'dayjs'
 
 /**
  * 评论列表的渲染和操作
@@ -98,21 +100,26 @@ const App = () => {
   }
 
   const [newComment, setNewComment] = useState("");
+  const inputRef = useRef(null);
   const handlePublish = () => {
     setCommentList([
       ...commentList,
       {
-        rpid: Date.now(),
+        rpid: uuidv4(),
         user: {
           uid: user.uid,
           avatar: "",
           uname: user.uname,
         },
         content: newComment,
-        ctime: "11-13 11:29",
+        ctime: dayjs(new Date()).format("MM-DD HH:mm"),
         like: 0,
       }
     ])
+    // 清空输入框
+    setNewComment("");
+    // 聚焦
+    inputRef.current.focus();
   }
 
   return (
@@ -160,6 +167,7 @@ const App = () => {
             <textarea
               className="reply-box-textarea"
               placeholder="发一条友善的评论"
+              ref ={inputRef}
               value={newComment}
               onChange={(e) => {
                 setNewComment(e.target.value);

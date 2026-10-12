@@ -338,6 +338,16 @@ const inputRef = useRef(null)
 ```jsx
 console.log(inputRef.current)
 ```
+**B站发布评论：id处理和时间处理**
+1. id处理：使用uuid库生成唯一id
+2. ctime要求以当前时间为准，生成固定格式-dayjs
+```jsx
+npm install uuid
+npm install dayjs
+```
+**清空内容并重新聚焦**
+1. 清空内容-把input状态值设置为空字符串
+2. 重新聚焦-拿到input的DOM元素，调用DOM元素的focus方法
 
 
 
