@@ -311,6 +311,22 @@ npm install classnames
   {item.text}
 </span>
   ```
+# 九、受控表单绑定
+**受控表单绑定**
+概念：使用react组件的状态useState控制表单的状态
+1. 准备一个React状态值
+```jsx
+const [value, setValue] = useState('')
+```
+2. 通过value属性绑定状态，通过onChange事件参数e.target.value获取表单值，通过调用setValue更新状态
+```jsx
+<input 
+  type="text"
+  value={value}
+  onChange={(e) => setValue(e.target.value)}
+/>
+```
+
 
 
 
