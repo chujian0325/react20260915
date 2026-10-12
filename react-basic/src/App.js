@@ -78,6 +78,13 @@ const App = () => {
   const handleDelete = (rpid) => {
     setCommentList(commentList.filter((item) => item.rpid !== rpid));
   };
+
+  const [type, setType] = useState("hot");
+  const highlight = (type) => {
+    setType(type);
+    
+  }
+  
   return (
     <div className="app">
       {/* 导航 Tab */}
@@ -90,8 +97,19 @@ const App = () => {
           </li>
           <li className="nav-sort">
             {/* 高亮类名： active */}
-            <span className="nav-item">最新</span>
-            <span className="nav-item">最热</span>
+            {tabs.map((item) => {
+              return (
+                <span
+                  key={item.type}
+                  className={`nav-item ${type === item.type && "active"}`}
+                  onClick={() => {
+                    highlight(item.type);
+                  }}
+                >
+                  {item.text}
+                </span>
+              );
+            })}
           </li>
         </ul>
       </div>
