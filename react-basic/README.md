@@ -216,6 +216,49 @@ function App() {
 export default App;
 ```
 
+# 六、修改状态的规则
+
+**状态不可变**
+在React中，状态是不可变的，这意味着一旦状态被创建，就不能直接修改它。如果需要更新状态，必须使用set函数来创建一个新的状态值，并将新值传递给set函数。这样做可以确保React能够正确地跟踪状态的变化，并重新渲染组件。
+状态被认为是只读的，我们应该始终替换它而不是修改它，直接修改不能触发视图更新
+
+```jsx
+const handleClick = () => {
+  // 直接修改状态变量，不能引发视图更新
+  // count++;
+  // console.log(count);
+  // 调用set函数更新状态变量
+  setCount(count + 1);
+};
+```
+
+**修改对象状态**
+规则：对于对象类型的状态变量，应该始终传给set函数一个全新的对象来修改
+
+直接修改原对象，不引发视图变化，调用set传入新对象修改状态
+```jsx
+import { useState } from "react";
+function App() {
+  const [form, setForm] = useState({
+    name: "Jack",
+  });
+
+  const handleClick = () => {
+    // form.name = 'Tom' // 直接修改原对象，不引发视图变化
+    setForm({
+      ...form,
+      name: "Tom",
+    });
+  };
+  return (
+    <div className="App">
+      <button onClick={handleClick}>{form.name}</button>
+    </div>
+  );
+}
+
+```
+
 
 
 
