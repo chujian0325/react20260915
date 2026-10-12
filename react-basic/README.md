@@ -449,4 +449,41 @@ const App = () => {
 };
 
 ```
+**useEffect依赖项参数说明**
+useEffect副作用函数的执行时机存在多种情况，根据依赖项的不同，会有不同的执行表现
+1. 如果不传入依赖项，副作用函数会在组件初始渲染+组件更新时执行
+2. 如果传入一个空数组，副作用函数只会在组件初始渲染完毕后执行一次
+3. 如果传入一个非空数组，副作用函数会在组件渲染完毕后执行，并且当数组中的数据发生变化时，副作用函数会重新执行
+```jsx
+import { useEffect, useState } from "react";
+
+const App = () => {
+  // 1. 没有依赖项， 初始+组件更新
+  const [count, setCount] = useState(0);
+  // useEffect(() => {
+  //   console.log("副作用函数执行了");
+  // });
+
+  // 2.  依赖项为空数组， 初始
+  // useEffect(() => {
+  //   console.log("副作用函数执行了");
+  // }, []);
+
+  // 3. 传入特定依赖项， 初始+依赖项更新，只有count变化时才会触发
+  useEffect(() => {
+    console.log("副作用函数执行了");
+  }, [count]);
+
+  return (
+    <div>
+      this is app
+      <button onClick={() => setCount(count + 1)}>+{count}</button>
+    </div>
+  );
+};
+
+export default App;
+
+```
+
 
