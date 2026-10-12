@@ -93,6 +93,73 @@ function App() {
 }
 ```
 
+# 三、React事件绑定
+**基础绑定**
+语法：on+事件名称={事件处理函数}，整体上遵循驼峰命名法
+```jsx
+function App() {
+  const handleClick = () => {
+    console.log("click");
+  };
+  return (
+    <div className="App">
+      <button onClick={handleClick}>click me</button>
+    </div>
+  );
+}
+
+```
+**使用事件对象参数**
+语法：在事件回调函数中设置形参e
+```jsx
+function App() {
+  const handleClick = (e) => {
+    console.log("click", e);
+  };
+  return (
+    <div className="App">
+      <button onClick={handleClick}>click me</button>
+    </div>
+  );
+}
+```
+
+**传递自定义参数**
+语法：事件绑定的位置改成箭头函数的写法，并传参
+```jsx
+function App() {
+  const handleClick = (name) => {
+    console.log("click", name);
+  };
+  return (
+    <div className="App">
+      <button onClick={() => handleClick("why")}>click me</button>
+    </div>
+  );
+}
+```
+注意：不能直接写函数调用，这里事件绑定需要一个函数引用
+
+**同时传递事件对象和自定义参数**
+语法：在事件绑定的位置传递事件实参e和自定义参数，注意顺序对应
+```jsx
+function App() {
+  // 传递自定义参数和事件对象
+  const clickHandle2 = (name, e) => {
+    console.log("click", name, e);
+  };
+  return (
+    <div className="App">
+      <button onClick={(e) => clickHandle2("jack", e)}>click me</button>
+    </div>
+  );
+}
+
+```
+
+
+
+
 
 
 

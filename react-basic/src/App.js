@@ -1,19 +1,19 @@
-// 定义文章类型
-const articleType = 3;
-function getArticleType() {
-  if (articleType === 1) {
-    return <div>我是无图文章</div>;
-  } else if (articleType === 2) {
-    return <div>我是单图模式</div>;
-  } else if (articleType === 3) {
-    return <div>我是三图模式</div>;
-  }
-}
 function App() {
+  // const handleClick = (e) => {
+  //   console.log("click", e);
+  // };
+  // 事件对象作为参数传递
+  const handleClick = (e) => {
+    console.log("click", e);
+  };
+  // 传递自定义参数
+  const clickHandle2 = (name, e) => {
+    console.log("click", name, e);
+  };
   return (
     <div className="App">
-      {/* 调用函数渲染不同模板 */}
-      {getArticleType()}
+      <button onClick={handleClick}>click me</button>
+      <button onClick={(e) => clickHandle2("jack", e)}>click me</button>
     </div>
   );
 }
