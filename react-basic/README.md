@@ -581,3 +581,6 @@ const App = () => {
 
 export default App;
 ```
+# 十四、React Hooks使用规则
+1. 只能在组件中或者其他自定义Hook函数中使用
+2. 只能在组件的顶层使用，不能嵌套在if、for、函数等条件语句中
