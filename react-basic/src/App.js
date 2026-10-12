@@ -1,6 +1,7 @@
 import "./App.scss";
 import avatar from "./images/bozai.png";
 import { useState } from "react";
+import _ from "lodash";
 /**
  * 评论列表的渲染和操作
  *
@@ -23,7 +24,7 @@ const defaultList = [
     content: "哎哟，不错哦",
     // 评论时间
     ctime: "10-18 08:15",
-    like: 88,
+    like: 128,
   },
   {
     rpid: 2,
@@ -74,7 +75,7 @@ const tabs = [
 ];
 
 const App = () => {
-  const [commentList, setCommentList] = useState(defaultList);
+  const [commentList, setCommentList] = useState(_.orderBy(defaultList, "like", "desc"));
   const handleDelete = (rpid) => {
     setCommentList(commentList.filter((item) => item.rpid !== rpid));
   };
@@ -82,9 +83,18 @@ const App = () => {
   const [type, setType] = useState("hot");
   const highlight = (type) => {
     setType(type);
-    
+    // 排序
+    if (type === "hot") {
+      setCommentList(
+        _.orderBy(commentList, "like", "desc")
+      );
+    } else{
+      setCommentList(
+        _.orderBy(commentList, "ctime", "desc")
+      );
+    }
   }
-  
+
   return (
     <div className="app">
       {/* 导航 Tab */}
