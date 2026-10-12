@@ -486,4 +486,53 @@ export default App;
 
 ```
 
+**useEffect清除副作用**
+在useEffect的副作用函数中，可以返回一个清除函数，用于清除副作用,比如我们开启了一个定时器，想在组件卸载的时候清除，这个过程就叫清除副作用
+
+说明：清除副作用的函数最常见的执行时机是在组件卸载时自动执行
+
+```jsx
+useEffect(() => {
+  // 副作用函数
+  const timer = setInterval(() => {
+    console.log("定时器执行了");
+  }, 1000);
+
+  // 清除副作用函数
+  return () => {
+    clearInterval(timer)
+}, [])
+```
+
+```jsx
+import { useEffect, useState } from "react";
+
+function Son() {
+  // 渲染时开启一个定时器
+  useEffect(() => {
+    const timer = setInterval(() => {
+      console.log("定时器执行中");
+    }, 1000);
+    // 清除副作用
+    return () => {
+      // 卸载时清除定时器
+      clearInterval(timer);
+    };
+  }, []);
+  return <div>this is son</div>;
+}
+const App = () => {
+  // 通过条件渲染模拟组件卸载
+  const [show, setShow] = useState(true);
+  return (
+    <div>
+      {show && <Son />}
+      <button onClick={() => setShow(false)}>卸载Son组件</button>
+    </div>
+  );
+};
+
+export default App;
+
+```
 
