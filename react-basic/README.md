@@ -360,6 +360,8 @@ npm install dayjs
 2. props可以传递任意类型的数据，包括函数、数字、字符串、布尔值、数组、对象、JSX等
 
 
+**父传子-特殊的prop children**
+场景：当我们把内容嵌套在子组件标签中时，父组件会自动在名为children的props属性中接收该内容
 
 
 
