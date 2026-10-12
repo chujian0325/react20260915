@@ -327,6 +327,18 @@ const [value, setValue] = useState('')
 />
 ```
 
+# 十、React中获取DOM
+在react中获取/操作DOM，需要使用useRef，分为两步：
+1. 使用useRef创建一个ref对象，并将其绑定到需要获取的DOM元素上
+```jsx
+const inputRef = useRef(null)
+<input type="text" ref={inputRef} />
+```
+2. 渲染完毕后，通过inputRef.current获取DOM元素
+```jsx
+console.log(inputRef.current)
+```
+
 
 
 
