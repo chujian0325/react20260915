@@ -296,6 +296,22 @@ React组件基础的样式控制有两种：
 **4. 实现评论列表排序功能**
 需求：点击最新，评论按照创建时间倒序排列；点击最热，评论按照点赞数倒序排列
 
+**classnames库：优化类名控制**
+classnames是一个简单的js库，可以方便的通过条件动态控制class类名
+```bash
+npm install classnames
+```
+```jsx
+// classNames接收两个参数，第一个参数是静态类名，第二个参数是对象，对象中的key是动态类名，value是布尔值，如果为true则添加该类名，如果为false则不添加
+<span
+  className={classNames("nav-item", {
+    active: type === item.type,
+  })}
+>
+  {item.text}
+</span>
+  ```
+
 
 
 
