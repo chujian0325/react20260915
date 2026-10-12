@@ -157,7 +157,34 @@ function App() {
 
 ```
 
+# 四、React中的组件
 
+**组件的定义**
+概念：组件是React中构建UI的基本单位，它是一个可复用的函数或类，用于描述UI的一部分
+
+在React中，组件可以是一个函数组件（首字母大写），也可以是一个类组件
+```jsx
+// 1. 定义组件
+function Button() {
+  return <button>click me</button>;
+}
+// 或者写成箭头函数的形式
+const Button = () => {
+  return <button>click me</button>;
+}
+function App() {
+  return (
+    <div className="App">
+      {/* 2. 使用组件 */}
+      {/* 自闭和 */}
+      <Button />
+      {/* 成对标签 */}
+      <Button></Button>
+    </div>
+  );
+}
+
+```
 
 
 

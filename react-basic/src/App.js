@@ -1,19 +1,15 @@
+// 1. 定义组件
+function Button() {
+  return <button>click me</button>;
+}
 function App() {
-  // const handleClick = (e) => {
-  //   console.log("click", e);
-  // };
-  // 事件对象作为参数传递
-  const handleClick = (e) => {
-    console.log("click", e);
-  };
-  // 传递自定义参数
-  const clickHandle2 = (name, e) => {
-    console.log("click", name, e);
-  };
   return (
     <div className="App">
-      <button onClick={handleClick}>click me</button>
-      <button onClick={(e) => clickHandle2("jack", e)}>click me</button>
+      {/* 2. 使用组件 */}
+      {/* 自闭和 */}
+      <Button />
+      {/* 成对标签 */}
+      <Button></Button>
     </div>
   );
 }
