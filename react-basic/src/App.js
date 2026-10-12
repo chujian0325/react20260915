@@ -1,23 +1,31 @@
 import { useState } from "react";
-function Son(props) {
+function A({ ongetAName }) {
   return (
     <div>
-      this is son
-      <button onClick={() => props.onGetSonMsg("hello")}>sendMsg</button>
+      this is A component
+      <button onClick={() => ongetAName("AName")}>发送数据</button>
+    </div>
+  );
+}
+function B(props) {
+  return (
+    <div>
+      this is B component，
+      {props.name}
     </div>
   );
 }
 const App = () => {
-  const getMsg = (msg) => {
-    console.log(msg);
-    setMsg(msg);
+  const [name, setName] = useState("");
+  const getAName = (name) => {
+    console.log(name);
+    setName(name);
   };
-  const [msg, setMsg] = useState("");
   return (
     <div>
-      this is app,{msg}
-      {/* 父组件通过props将函数传递给子组件 */}
-      <Son onGetSonMsg={getMsg}></Son>
+      this is app
+      <A ongetAName={getAName} />
+      <B name={name} />
     </div>
   );
 };
