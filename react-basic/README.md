@@ -373,3 +373,38 @@ npm install dayjs
 1. A组件先通过子传父，把数据传递给父组件
 2. 父组件再通过props把数据传递给B组件
 
+**使用Context实现跨组件通信**
+实现步骤：
+1. 使用createContext创建上下文对象Ctx
+2. 在顶层组件（App）中通过Ctx.Provider组件提供数据
+3. 在子组件中通过useContext(Ctx)接收数据
+```jsx
+import { createContext, useContext } from "react";
+const MsgContext = createContext();
+function A() {
+  return (
+    <div>
+      this is A component
+      <B />
+    </div>
+  );
+}
+function B() {
+  const msg = useContext(MsgContext);
+  return <div>this is B component，{msg}</div>;
+}
+const App = () => {
+  const msg = "this is app msg";
+  return (
+    <div>
+      <MsgContext.Provider value={msg}>
+        this is app
+        <A />
+      </MsgContext.Provider>
+    </div>
+  );
+};
+
+export default App;
+
+```

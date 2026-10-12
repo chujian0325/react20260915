@@ -1,31 +1,25 @@
-import { useState } from "react";
-function A({ ongetAName }) {
+import { createContext, useContext } from "react";
+const MsgContext = createContext();
+function A() {
   return (
     <div>
       this is A component
-      <button onClick={() => ongetAName("AName")}>发送数据</button>
+      <B />
     </div>
   );
 }
-function B(props) {
-  return (
-    <div>
-      this is B component，
-      {props.name}
-    </div>
-  );
+function B() {
+  const msg = useContext(MsgContext);
+  return <div>this is B component，{msg}</div>;
 }
 const App = () => {
-  const [name, setName] = useState("");
-  const getAName = (name) => {
-    console.log(name);
-    setName(name);
-  };
+  const msg = "this is app msg";
   return (
     <div>
-      this is app
-      <A ongetAName={getAName} />
-      <B name={name} />
+      <MsgContext.Provider value={msg}>
+        this is app
+        <A />
+      </MsgContext.Provider>
     </div>
   );
 };
