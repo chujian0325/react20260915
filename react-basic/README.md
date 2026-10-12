@@ -186,8 +186,35 @@ function App() {
 
 ```
 
+# 五、useState
+**useState基础使用**
+useState是React中用于在函数组件中添加状态管理的Hook，它允许我们向组件添加一个状态变量，从而控制影响组件的渲染结果
+本质：和普通JS变量不同的是，状态变量一旦发生变化，视图UI也会发生变化（数据驱动视图）
 
 
+1. useState是一个函数，返回值是一个数组
+2. 数组中的第一个参数是状态变量，第二个参数是set函数，用来修改状态变量
+3. useState的参数将作为状态变量的初始值
+```jsx
+// useState实现一个计数器按钮
+import { useState } from "react";
+function App() {
+  // 1.调用useState添加一个状态变量
+  const [count, setCount] = useState(0);
+  // 2. 点击事件回调
+  const handleClick = () => {
+    // 3. 调用setCount更新状态变量
+    setCount(count + 1);
+  };
+  return (
+    <div className="App">
+      <button onClick={handleClick}>{count}</button>
+    </div>
+  );
+}
+
+export default App;
+```
 
 
 
