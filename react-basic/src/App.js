@@ -75,6 +75,9 @@ const tabs = [
 
 const App = () => {
   const [commentList, setCommentList] = useState(defaultList);
+  const handleDelete = (rpid) => {
+    setCommentList(commentList.filter((item) => item.rpid !== rpid));
+  };
   return (
     <div className="app">
       {/* 导航 Tab */}
@@ -123,7 +126,7 @@ const App = () => {
                 {/* 头像 */}
                 <div className="root-reply-avatar">
                   <div className="bili-avatar">
-                    <img className="bili-avatar-img" alt="" src={item.avatar}/>
+                    <img className="bili-avatar-img" alt="" src={item.avatar} />
                   </div>
                 </div>
 
@@ -140,7 +143,17 @@ const App = () => {
                       <span className="reply-time">{item.ctime}</span>
                       {/* 评论数量 */}
                       <span className="reply-time">点赞数:{item.like}</span>
-                      <span className="delete-btn">删除</span>
+                      {/* 展示条件：user.uid === item.user.uid */}
+                      {user.uid === item.user.uid && (
+                        <span
+                          className="delete-btn"
+                          onClick={() => {
+                            handleDelete(item.rpid);
+                          }}
+                        >
+                          删除
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
