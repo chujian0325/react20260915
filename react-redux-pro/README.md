@@ -132,3 +132,66 @@ useSelector
 useDispatch
 3. 如何得到要提交action对象？
 执行store模块中导出的actionCreater方法，得到action对象
+
+**Redux与React - 提交action传参**
+需求：组件中有俩个按钮 `add to 10` 和 `add to 20` 可以直接把count值修改到对应的数字，目标count值是在组件中传递过去的，需要在提交action的时候传递参数
+在reducers的同步修改方法中添加action对象参数，在调用actionCreater的时候传递参数，参数会被传递到action对象payload属性上
+counterStore.js
+```js
+import { createSlice } from "@reduxjs/toolkit";
+
+const counterStore = createSlice({
+  name: "counter",
+  // 初始化state
+  initialState: {
+    count: 0,
+  },
+  // 修改数据的同步方法，支持直接修改
+  reducers: {
+    increment: (state) => {
+      state.count += 1;
+    },
+    decrement: (state) => {
+      state.count -= 1;
+    },
+    // 加
+    addNum: (state, action) => {
+      state.count += action.payload;
+    }
+  },
+});
+
+// 解构出来 actionCreater 函数
+const { increment, decrement, addNum } = counterStore.actions;
+// 获取reducer
+const reducer = counterStore.reducer;
+// 以按需导出的方式导出actionCreater
+export { increment, decrement, addNum};
+// 以默认导出的方式导出reducer
+export default reducer;
+
+```
+App.js
+```js
+import { useSelector, useDispatch } from "react-redux";
+// 导入创建action函数的方法
+import { increment, decrement, addNum } from "./store/modules/counterStore";
+function App() {
+  const { count } = useSelector((state) => state.counter);
+  // 得到dispatch方法，用于分发action
+  const dispatch = useDispatch();
+  return (
+    <div>
+      {/* 调用dispatch,提交action */}
+      {/* <button onClick={() => dispatch(decrement())}>-</button> */}
+      {count}
+      {/* <button onClick={() => dispatch(increment())}>+</button> */}
+      <button onClick={()=>{dispatch(addNum(10))}}>加10</button>
+      <button onClick={()=>{dispatch(addNum(20))}}>加20</button>
+
+    </div>
+  );
+}
+
+export default App;
+```
