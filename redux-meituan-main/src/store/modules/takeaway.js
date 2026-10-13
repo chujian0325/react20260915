@@ -7,6 +7,8 @@ const foodsSlice = createSlice({
     foodsList: [],
     // 菜单激活下标值
     activeIndex: 0,
+    // 购物车列表
+    cartList: [],
 
   },
   reducers: {
@@ -16,7 +18,17 @@ const foodsSlice = createSlice({
     // 更改activeIndex
     changeActiveIndex(state, action) {
       state.activeIndex = action.payload;
-    }
+    },
+    // 添加购物车
+    addCart (state, action) {
+      // 是否添加过？以action.payload.id去cartList中匹配 匹配到了 添加过
+      const item = state.cartList.find(item => item.id === action.payload.id)
+      if (item) {
+        item.count++
+      } else {
+        state.cartList.push(action.payload)
+      }
+    },
   },
 });
 
@@ -29,5 +41,5 @@ const fetchFoodsList = () => {
 };
 
 export { fetchFoodsList };
-export const { setFoods, changeActiveIndex } = foodsSlice.actions;
+export const { setFoods, changeActiveIndex, addCart } = foodsSlice.actions;
 export default foodsSlice.reducer;
