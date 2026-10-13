@@ -3,12 +3,20 @@ import axios from "axios";
 const foodsSlice = createSlice({
   name: "foods",
   initialState: {
+    // 商品列表
     foodsList: [],
+    // 菜单激活下标值
+    activeIndex: 0,
+
   },
   reducers: {
     setFoods(state, action) {
       state.foodsList = action.payload;
     },
+    // 更改activeIndex
+    changeActiveIndex(state, action) {
+      state.activeIndex = action.payload;
+    }
   },
 });
 
@@ -21,5 +29,5 @@ const fetchFoodsList = () => {
 };
 
 export { fetchFoodsList };
-export const { setFoods } = foodsSlice.actions;
+export const { setFoods, changeActiveIndex } = foodsSlice.actions;
 export default foodsSlice.reducer;
