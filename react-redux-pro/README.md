@@ -195,3 +195,73 @@ function App() {
 
 export default App;
 ```
+
+**Redux与React - 异步状态操作**
+1. 创建store的写法保持不变，配置好同步修改状态的方法
+2. 单独封装一个函数，在函数内部return一个新函数，在新函数中
+  2.1 封装异步请求获取数据
+  2.2 调用同步actionCreater传入异步数据生成一个action对象，并使用dispatch提交
+3. 组件中dispatch的写法保持不变
+channelStore.js
+```js
+import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+const channelStore = createSlice({
+  name: "channel",
+  initialState: {
+    channelList: [],
+  },
+  reducers: {
+    setChannels(state, action) {
+      state.channelList = action.payload;
+    },
+  },
+});
+
+// 异步请求
+const fetchChannelsList = () => {
+  return async (dispatch) => {
+    const res = await axios.get("https://geek.itheima.net/v1_0/channels");
+    dispatch(setChannels(res.data.data.channels));
+  };
+};
+
+const { setChannels } = channelStore.actions;
+export { fetchChannelsList };
+const reducer = channelStore.reducer;
+export default reducer;
+
+```
+App.jsx
+```js
+import { useSelector, useDispatch } from "react-redux";
+import {useEffect} from 'react'
+// 导入创建action函数的方法
+import {  fetchChannelsList } from "./store/modules/channelStore";
+
+function App() {
+  const { channelList} = useSelector((state) => state.channel);
+  // 得到dispatch方法，用于分发action
+  const dispatch = useDispatch();
+
+  // 使用useEffect触发异步请求
+  useEffect(() => {
+    dispatch(fetchChannelsList());
+  },[dispatch])
+  return (
+    <div>
+      <ul>
+        {
+          channelList.map(item=>{
+            return <li key={item.id}>{item.name}</li>
+          })
+        }
+      </ul>
+    </div>
+  );
+}
+
+export default App;
+```
+
+
