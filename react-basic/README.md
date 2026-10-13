@@ -600,3 +600,75 @@ export default App;
   (3)将请求到的数据return出去
   (4)在组件中使用自定义hook函数，解构并使用数据
 3. 把评论中的每一项抽象成一个独立的组件实现渲染
+
+# 十六、Redux
+Redux 是React最常用的集中状态管理工具，类似于Vue中的Pinia（Vuex），可以独立于框架运行
+作用：通过集中管理的方式管理应用的状态
+
+不和任何框架绑定，不使用任何构建工具，使用纯Redux实现计数器
+使用步骤：
+1. 定义一个 reducer 函数 （根据当前想要做的修改返回一个新的状态）
+2. 使用createStore方法传入 reducer函数 生成一个store实例对象
+3. 使用store实例的 subscribe方法 订阅数据的变化（数据一旦变化，可以得到通知）
+4. 使用store实例的 dispatch方法提交action对象 触发数据变化（告诉reducer你想怎么改数据）
+5. 使用store实例的 getState方法 获取最新的状态数据更新到视图中
+```html
+<button id="decrement">-</button>
+<span id="count">0</span>
+<button id="increment">+</button>
+
+<script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
+
+<script>
+  // 1. 定义reducer函数 
+  // 作用: 根据不同的action对象，返回不同的新的state
+  // state: 管理的数据初始状态
+  // action: 对象 type 标记当前想要做什么样的修改
+  function reducer (state = { count: 0 }, action) {
+    // 数据不可变：基于原始状态生成一个新的状态
+    if (action.type === 'INCREMENT') {
+      return { count: state.count + 1 }
+    }
+    if (action.type === 'DECREMENT') {
+      return { count: state.count - 1 }
+    }
+    return state
+  }
+
+  // 2. 使用reducer函数生成store实例
+  const store = Redux.createStore(reducer)
+
+  // 3. 通过store实例的subscribe订阅数据变化
+  // 回调函数可以在每次state发生变化的时候自动执行
+  store.subscribe(() => {
+    // 5. 通过store实例的getState方法获取最新状态更新到视图中
+    console.log('state变化了', store.getState())
+    document.getElementById('count').innerText = store.getState().count
+  })
+
+  // 4. 通过store实例的dispatch函数提交action更改状态 
+  const inBtn = document.getElementById('increment')
+  inBtn.addEventListener('click', () => {
+    // 增
+    store.dispatch({
+      type: 'INCREMENT'
+    })
+  })
+
+  const dBtn = document.getElementById('decrement')
+  dBtn.addEventListener('click', () => {
+    // 减
+    store.dispatch({
+      type: 'DECREMENT'
+    })
+  })
+
+
+</script>
+```
+
+**Redux管理数据流程梳理**
+为了职责清晰，数据流向明确，Redux把整个数据修改的流程分成了三个核心概念，分别是：state、action和reducer
+1. state - 一个对象 存放着我们管理的数据状态
+2. action - 一个对象 用来描述你想怎么改数据
+3. reducer - 一个函数 更具action的描述，返回一个新的state
