@@ -29,6 +29,21 @@ const foodsSlice = createSlice({
         state.cartList.push(action.payload)
       }
     },
+    // 增加
+    increment (state, action) {
+      const item = state.cartList.find(item => item.id === action.payload)
+      item.count++
+    },
+    decrement (state, action) {
+      const item = state.cartList.find(item => item.id === action.payload)
+      if (item.count > 1) {
+        item.count--
+      }
+    },
+    // 清除购物车
+    clearCart (state) {
+      state.cartList = []
+    }
   },
 });
 
@@ -41,5 +56,5 @@ const fetchFoodsList = () => {
 };
 
 export { fetchFoodsList };
-export const { setFoods, changeActiveIndex, addCart } = foodsSlice.actions;
+export const { setFoods, changeActiveIndex, addCart, increment, decrement, clearCart } = foodsSlice.actions;
 export default foodsSlice.reducer;
