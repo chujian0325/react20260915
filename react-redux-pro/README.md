@@ -264,4 +264,9 @@ function App() {
 export default App;
 ```
 
+**Redux调试 - devtools**
+安装chrome调试工具：Redux DevTools
+Redux官方提供了针对于Redux的调试工具，支持实时state信息展示，action提交信息查看等
+
+
 
