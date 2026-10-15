@@ -123,3 +123,34 @@ const Login = () => {
 
 export default Login;
 ```
+
+**路由导航传参**
+- searchParams 传参
+```jsx
+<button onClick={()=>{navigate("/article?id=1&title=hello")}}>searchParams传参</button>
+
+
+import { useSearchParams } from "react-router-dom";
+const [params] = useSearchParams();
+let id = params.get("id");
+```
+
+- params 传参
+```jsx
+<button onClick={()=>{navigate("/article/1001")}}>Params传参</button>
+
+```
+配置路由:id作为动态路由参数
+```jsx
+{
+  path: "/article/:id",
+  element: <Article/>,
+},
+
+```
+```jsx
+import { useParams } from "react-router-dom";
+
+const param2 = useParams();
+let id2 = param2.id
+```

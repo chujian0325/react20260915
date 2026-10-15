@@ -7,6 +7,10 @@ const Login = () => {
       <Link to="/article">跳转到文章页面</Link>
     
       <button onClick={()=>{navigate("/article")}}>跳转到文章页面</button>
+      <button onClick={()=>{navigate("/article?id=1&title=hello")}}>searchParams传参</button>
+
+      <button onClick={()=>{navigate("/article/1001")}}>Params传参</button>
+
     </div>
   );
 };
