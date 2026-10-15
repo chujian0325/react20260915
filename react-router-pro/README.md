@@ -229,3 +229,12 @@ export default NotFound;
   element: <NotFound />,
 }
 ```
+
+**两种路由模式**
+各个主流框架的路由常用的路由模式有两种，history模式和hash模式, ReactRouter分别由 createBrowerRouter 和
+createHashRouter 函数负责创建
+
+| 路由模式 | url表现      | 底层原理                      | 是否需要后端支持
+| history | url/login   | history对象 + pushState事件   | 需要
+| hash    | url/#/login | 监听 hashChange事件           | 不需要
+
