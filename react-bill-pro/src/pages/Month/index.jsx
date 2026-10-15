@@ -1,5 +1,5 @@
 import { NavBar, DatePicker } from 'antd-mobile'
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
 import './index.scss'
@@ -47,6 +47,14 @@ const Month = () => {
 
 
   }
+  // 初始化的时候，把当前月份的数据渲染到页面
+  useEffect(() => {
+    const nowDate = dayjs(new Date()).format('YYYY-MM')
+    // 边界值控制
+    if (monthGroup[nowDate]){
+      setCurrentMonthList(monthGroup[nowDate])
+    }
+  }, [monthGroup])
   return (
     <div className="monthlyBill">
       <NavBar className="nav" backArrow={false}>
