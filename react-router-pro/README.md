@@ -85,3 +85,41 @@ createRoot(document.getElementById('root')).render(
   </StrictMode>,
 )
 ```
+
+**路由导航**
+路由系统中的多个路由之间需要进行路由跳转，并且在跳转的同时有可能需要传递参数进行通信
+- 声明式导航
+声明式导航是指通过在模版中通过 `<Link/> ` 组件描述出要跳转到哪里去，比如后台管理系统的左侧菜单通常使用这种方式进行
+语法说明：通过给组件的to属性指定要跳转到路由path，组件会被渲染为浏览器支持的a链接，如果需要传参直接通过字符串拼接的方式拼接参数即可
+```jsx
+import { Link } from "react-router-dom";
+const Login = () => {
+  return (
+    <div>
+      Login
+      <Link to="/article">跳转到文章页面</Link>
+    </div>
+  );
+};
+
+export default Login;
+```
+- 编程式导航
+编程式导航是指通过 `useNavigate` 钩子得到导航方法，然后通过调用方法以命令式的形式进行路由跳转，比如想在登录请求完毕之后跳转就可以选择这种方式，更加灵活
+语法说明：通过调用navigate方法传入地址path实现跳转
+```jsx
+import { Link, useNavigate } from "react-router-dom";
+const Login = () => {
+  const navigate = useNavigate();
+  return (
+    <div>
+      Login
+      <Link to="/article">跳转到文章页面</Link>
+    
+      <button onClick={()=>{navigate("/article")}}>跳转到文章页面</button>
+    </div>
+  );
+};
+
+export default Login;
+```
