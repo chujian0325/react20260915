@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import './index.scss'
 import { useSelector } from 'react-redux'
 import _ from 'lodash'
-
+import DayBill from './components/DayBill'
 const Month = () => {
   // 按月数据分组
   const billList = useSelector((state) => state.bill.billList)
@@ -96,6 +96,8 @@ const Month = () => {
             max={new Date()}
           />
         </div>
+        {/* 单日列表统计 */}
+        <DayBill />
       </div>
     </div >
   )
