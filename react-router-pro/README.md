@@ -154,3 +154,38 @@ import { useParams } from "react-router-dom";
 const param2 = useParams();
 let id2 = param2.id
 ```
+
+**嵌套路由**
+实现步骤：
+1. 使用 children 属性配置路由嵌套关系
+2. 使用 `<Outlet/>` 组件配置二级路由渲染位置
+```jsx
+{
+  path: "/",
+  element: <Layout />,
+  children: [
+    {
+      path: "board",
+      element: <Board />,
+    },
+    {
+      path: "about",
+      element: <About />,
+    },
+  ],
+},
+```
+```jsx
+import { Outlet, Link } from "react-router-dom";
+const Layout = () => {
+  return (
+    <div>
+      <h1>Layout</h1>
+      <Link to="/board">面板</Link>
+      <Link to="/about">关于</Link>
+      {/* 子路由出口 */}
+      <Outlet />
+    </div>
+  );
+};
+```
