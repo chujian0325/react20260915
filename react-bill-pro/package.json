@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "oxlint",
+    "server": "json-server ./server/data.json --port 8888",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -24,6 +25,7 @@
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",
+    "json-server": "^1.0.0-beta.15",
     "oxlint": "^1.81.0",
     "vite": "^8.3.0"
   }
