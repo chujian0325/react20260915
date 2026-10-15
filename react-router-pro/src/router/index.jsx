@@ -12,7 +12,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "board",
+        index: true, // 默认路由
         element: <Board />,
       },
       {

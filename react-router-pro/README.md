@@ -189,3 +189,18 @@ const Layout = () => {
   );
 };
 ```
+
+**默认二级路由**
+当访问的是一级路由时，默认的二级路由组件可以得到渲染，只需要在二级路由的位置去掉path，设置index属性为true
+```jsx
+children: [
+  {
+    index: true, // 默认路由
+    element: <Board />,
+  },
+  {
+    path: "about",
+    element: <About />,
+  },
+],
+```
