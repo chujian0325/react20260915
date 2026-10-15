@@ -42,7 +42,7 @@ const Layout = () => {
   }
   return (
     <div className="layout">
-      <div className="container">
+      <div className="main">
         <Outlet />
       </div>
       <div className="footer">
