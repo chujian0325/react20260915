@@ -204,3 +204,28 @@ children: [
   },
 ],
 ```
+
+**404路由配置**
+场景：当浏览器输入url的路径在整个路由配置中都找不到对应的 path，为了用户体验，可以使用 404 兜底组件进行渲染
+实现步骤：
+1. 准备一个NotFound组件
+2. 在路由表数组的末尾，以*号作为路由path配置路由
+
+```jsx
+const NotFound = () => {
+  return (
+    <div>
+      <h1>404 Not Found</h1>
+      <p>Sorry, the page you are looking for does not exist.</p>
+    </div>
+  );
+}
+
+export default NotFound;
+```
+```jsx
+{
+  path: "*",
+  element: <NotFound />,
+}
+```
