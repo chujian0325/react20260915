@@ -5,6 +5,9 @@ import classNames from 'classnames'
 import { billListData } from '../../contants/index'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import dayjs from 'dayjs'
+import { addBillList } from '../../store/modules/billStore'
+import { useDispatch } from 'react-redux'
 
 const New = () => {
   const navigate = useNavigate()
@@ -12,6 +15,31 @@ const New = () => {
   const [billType, setBillType] = useState('pay') // pay:支出 income:收入
   const changeType = (type) => {
     setBillType(type)
+  }
+
+  // 收集金额
+  const [money, setMoney] = useState('')
+  const changeMoney = (value) => {
+    setMoney(value)
+  }
+
+  // 收集账单类型
+  const [useFor, serUseFor] = useState('')
+  const changeUseFor = (value) => {
+    serUseFor(value)
+  }
+
+  const dispatch = useDispatch()
+  // 保存
+  const saveBill = () => {
+    const data = {
+      type: billType,
+      money: billType == 'pay' ?  -money : +money,
+      date: dayjs(new Date()).format('YYYY-MM-DD'),
+      useFor: useFor
+    }
+    console.log(data)
+    dispatch(addBillList(data))
   }
   return (
     <div className="keepAccounts">
@@ -53,6 +81,8 @@ const New = () => {
                 className="input"
                 placeholder="0.00"
                 type="number"
+                value={money}
+                onChange={changeMoney}
               />
               <span className="iconYuan">¥</span>
             </div>
@@ -74,6 +104,7 @@ const New = () => {
                         ''
                       )}
                       key={item.type}
+                      onClick={() => {changeUseFor(item.type)}}
 
                     >
                       <div className="icon">
@@ -90,7 +121,7 @@ const New = () => {
       </div>
 
       <div className="btns">
-        <Button className="btn save">
+        <Button className="btn save" onClick={saveBill}>
           保 存
         </Button>
       </div>
