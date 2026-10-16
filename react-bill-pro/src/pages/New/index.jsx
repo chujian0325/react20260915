@@ -35,11 +35,21 @@ const New = () => {
     const data = {
       type: billType,
       money: billType == 'pay' ?  -money : +money,
-      date: dayjs(new Date()).format('YYYY-MM-DD'),
+      date: dayjs(date).format('YYYY-MM-DD'),
       useFor: useFor
     }
     console.log(data)
     dispatch(addBillList(data))
+  }
+  const [date, setDate] = useState(dayjs(new Date()).format('YYYY-MM-DD'))
+  // 控制时间打开关闭
+  const [ dateVisible, setDateVisible ] = useState(false)
+  const setDatePickerVisible = (value) => {
+    setDateVisible(value)
+  }
+  const dateConfirm = (value) => {
+    setDate(dayjs(value).format('YYYY-MM-DD'))
+    setDateVisible(false)
   }
   return (
     <div className="keepAccounts">
@@ -69,11 +79,14 @@ const New = () => {
           <div className="kaForm">
             <div className="date">
               <Icon type="calendar" className="icon" />
-              <span className="text">{'今天'}</span>
+              <span className="text" onClick={() => {setDatePickerVisible(true)}}>{date}</span>
               <DatePicker
                 className="kaDate"
                 title="记账日期"
                 max={new Date()}
+                visible={dateVisible}
+                onCancel={() => {setDatePickerVisible(false)}}
+                onConfirm={dateConfirm}
               />
             </div>
             <div className="kaInput">
@@ -101,7 +114,7 @@ const New = () => {
                     <div
                       className={classNames(
                         'item',
-                        ''
+                        item.type === useFor ? 'selected' : ''
                       )}
                       key={item.type}
                       onClick={() => {changeUseFor(item.type)}}

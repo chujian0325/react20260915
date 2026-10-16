@@ -97,6 +97,20 @@
       "date": "2026-10-16",
       "useFor": "overtimepay",
       "id": "WKI_c0AgEEk"
+    },
+    {
+      "type": "pay",
+      "money": -20,
+      "date": "2026-10-16",
+      "useFor": "drinks",
+      "id": "WAcf_CZMS_Y"
+    },
+    {
+      "type": "pay",
+      "money": -30,
+      "date": "2026-10-14",
+      "useFor": "audio",
+      "id": "9couJo9pvxU"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
