@@ -5,3 +5,6 @@ npm i antd
 npm i react-router-dom
 npm i axios
 npm i react-redux @reduxjs/toolkit
+
+手机号：13800000002
+验证码：246810

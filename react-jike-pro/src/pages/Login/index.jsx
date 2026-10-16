@@ -1,10 +1,14 @@
 import './index.scss'
 import { Card, Form, Input, Button } from 'antd'
 import logo from '../../assets/logo.png'
+import { fetchLogin } from '../../store/modules/user'
+import { useDispatch } from 'react-redux'
 
 const Login = () => {
+  const dispatch = useDispatch()
   const handleFinish = (values) => {
     console.log('Success:', values);
+    dispatch(fetchLogin(values))
   }
   return (
     <div className="login">
