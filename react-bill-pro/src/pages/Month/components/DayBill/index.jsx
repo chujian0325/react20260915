@@ -2,7 +2,7 @@ import classNames from "classnames";
 import "./index.scss";
 import { useMemo, useState } from 'react'
 import { billTypeToName } from "../../../../contants/index";
-
+import Icon from "../../../../components/Icon";
 const DayBill = ({ date, billList }) => {
   const dayResult = useMemo(()=>{
     // 支出、出入、结余
@@ -41,10 +41,12 @@ const DayBill = ({ date, billList }) => {
           </div>
         </div>
       </div>
+      {/* 单日列表  */}
       <div className="billList" style={{ display: showDetail ? 'block': 'none' }}>
         {billList.map(item => {
           return (
             <div className="bill" key={item.id}>
+              <Icon type={item.useFor}/>
               <div className="detail">
                 <div className="billType">{billTypeToName[item.useFor]}</div>
               </div>
