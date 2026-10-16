@@ -47,6 +47,17 @@ const Month = () => {
 
 
   }
+
+  // 当月按照日来分组
+  const dayGroup = useMemo(() => {
+    const groupData = _.groupBy(currentMonthList, (item) => dayjs(item.date).format('YYYY-MM-DD'))
+    const keys = Object.keys(groupData)
+    return {
+      groupData,
+      keys
+    }
+  }, [currentMonthList])
+  console.log('dayGroup',dayGroup)
   // 初始化的时候，把当前月份的数据渲染到页面
   useEffect(() => {
     const nowDate = dayjs(new Date()).format('YYYY-MM')
@@ -97,7 +108,15 @@ const Month = () => {
           />
         </div>
         {/* 单日列表统计 */}
-        <DayBill />
+        {
+          dayGroup.keys.map(key => {
+            return <DayBill
+              key={key}
+              date={key}
+              billList={dayGroup.groupData[key]}
+            />
+          })
+        }
       </div>
     </div >
   )
