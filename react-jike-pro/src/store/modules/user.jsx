@@ -3,11 +3,12 @@ import { request } from "../../utils/index";
 const userStore = createSlice({
   name: "user",
   initialState: {
-    token: "",
+    token: localStorage.getItem("token") || "",
   },
   reducers: {
     setToken(state, action) {
       state.token = action.payload;
+      localStorage.setItem("token", action.payload);
     },
   },
 });
