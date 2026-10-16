@@ -14,7 +14,7 @@ const userStore = createSlice({
 
 // 异步方法完成登录获取token
 const fetchLogin = (loginForm) => {
-  return async () => {
+  return async (dispatch) => {
     const res = await request.post("/authorizations", loginForm);
     dispatch(setToken(res.data.token));
   };
