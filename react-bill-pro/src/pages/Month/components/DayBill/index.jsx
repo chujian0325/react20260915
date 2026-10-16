@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import "./index.scss";
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { billTypeToName } from "../../../../contants/index";
 
 const DayBill = ({ date, billList }) => {
@@ -14,12 +14,17 @@ const DayBill = ({ date, billList }) => {
       total: pay + income
     }
   }, [billList])
+  // 控制展开收起
+  const [showDetail, setShowDetail] = useState(false)
+  const toggleDetail = () => {
+    setShowDetail(!showDetail)
+  }
   return (
     <div className={classNames("dailyBill")}>
       <div className="header">
         <div className="dateIcon">
           <span className="date">{date}</span>
-          <span className={classNames("arrow")}></span>
+          <span className={classNames("arrow", showDetail && 'expand' )} onClick={()=>{toggleDetail()}}></span>
         </div>
         <div className="oneLineOverview">
           <div className="pay">
@@ -36,7 +41,7 @@ const DayBill = ({ date, billList }) => {
           </div>
         </div>
       </div>
-      <div className="billList">
+      <div className="billList" style={{ display: showDetail ? 'block': 'none' }}>
         {billList.map(item => {
           return (
             <div className="bill" key={item.id}>
