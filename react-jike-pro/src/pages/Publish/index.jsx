@@ -50,7 +50,14 @@ const Publish = () => {
     })
     console.log('提交', res)
   }
-  
+
+  // 上传图片
+  const [imageList, setImageList] = useState([])
+  const onUploadChange = (info) => {
+    console.log('上传图片',info)
+      setImageList(info.fileList)
+  }
+
   return (
     <div className="publish">
       <Card
@@ -88,6 +95,30 @@ const Publish = () => {
               }
             </Select>
           </Form.Item>
+          <Form.Item label="封面">
+            <Form.Item name="type">
+              <Radio.Group>
+                <Radio value={1}>单图</Radio>
+                <Radio value={3}>三图</Radio>
+                <Radio value={0}>无图</Radio>
+              </Radio.Group>
+            </Form.Item>
+            {/* listType：决定选择文件样式
+                showUploadList：是否展示上传列表
+             */}
+            <Upload
+              name="image"
+              listType="picture-card"
+              showUploadList
+              action={'https://geek.itheima.net/v1_0/upload'}
+              onChange={onUploadChange}
+            >
+              <div style={{ marginTop: 8 }}>
+                <PlusOutlined />
+              </div>
+            </Upload>
+          </Form.Item>
+
           <Form.Item
             label="内容"
             name="content"

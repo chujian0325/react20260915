@@ -14,4 +14,12 @@ export function addArticles(data) {
     data
   });
 }
+// 上传图片
+export function uploadImg(data) {
+  return request({
+    url: "/upload",
+    method: "post",
+    data
+  });
+}
 
