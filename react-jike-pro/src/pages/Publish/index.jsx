@@ -15,7 +15,7 @@ import './index.scss'
 import { Editor, Toolbar } from '@wangeditor/editor-for-react'
 import '@wangeditor/editor/dist/css/style.css'
 import { useState, useEffect } from 'react'
-import { getChannelApI } from '../../apis/article'
+import { getChannelApI, addArticles } from '../../apis/article'
 const { Option } = Select
 
 const Publish = () => {
@@ -35,6 +35,21 @@ const Publish = () => {
     }
     getChannelList()
   }, [])
+
+  const onFinish = (values) => {
+    console.log('Success:', values, html)
+    const { title, channel_id } = values
+    const res = addArticles({
+      title,
+      content: html,
+      cover: {
+        type: 0,
+        images: []
+      },
+      channel_id
+    })
+    console.log('提交', res)
+  }
   
   return (
     <div className="publish">
@@ -51,6 +66,7 @@ const Publish = () => {
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 16 }}
           initialValues={{ type: 1 }}
+          onFinish={onFinish}
         >
           <Form.Item
             label="标题"
@@ -75,7 +91,14 @@ const Publish = () => {
           <Form.Item
             label="内容"
             name="content"
-            rules={[{ required: true, message: '请输入文章内容' }]}
+            rules={[{ required: true, message: '请输入文章内容',
+              validator: (_, value) => {
+                if (value === '<p><br></p>') {
+                  return Promise.reject(new Error('请输入文章内容'))
+                }
+                return Promise.resolve()
+              }
+             }]}
           >
             {/* 富文本编辑器 */}
             <div>
