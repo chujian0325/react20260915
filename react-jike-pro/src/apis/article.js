@@ -22,4 +22,12 @@ export function uploadImg(data) {
     data
   });
 }
+// 获取文章列表
+export function getArticleListAPI() {
+  return request({
+    url: "/mp/articles",
+    method: "get",
+  });
+}
+
 
