@@ -15,6 +15,7 @@ import './index.scss'
 import { Editor, Toolbar } from '@wangeditor/editor-for-react'
 import '@wangeditor/editor/dist/css/style.css'
 import { useState, useEffect } from 'react'
+import { getChannelApI } from '../../apis/article'
 const { Option } = Select
 
 const Publish = () => {
@@ -25,6 +26,15 @@ const Publish = () => {
       if (editor) editor.destroy()
     }
   }, [editor])
+
+  const [channelList, setChannelList] = useState([])
+  useEffect(() => {
+    const getChannelList = async () => {
+      const res = await getChannelApI()
+      setChannelList(res.data.channels)
+    }
+    getChannelList()
+  }, [])
   
   return (
     <div className="publish">
@@ -55,7 +65,11 @@ const Publish = () => {
             rules={[{ required: true, message: '请选择文章频道' }]}
           >
             <Select placeholder="请选择文章频道" style={{ width: 400 }}>
-              <Option value={0}>推荐</Option>
+              {
+                channelList.map(item=>{
+                  return <Option key={item.id} value={item.id}>{item.name}</Option>
+                })
+              }
             </Select>
           </Form.Item>
           <Form.Item
