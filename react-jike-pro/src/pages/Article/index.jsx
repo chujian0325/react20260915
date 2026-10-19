@@ -9,11 +9,13 @@ import img404 from '../../assets/error.png'
 import { useChannels } from '../../hooks/useChannels'
 import { getArticleListAPI, delArticleByIdAPI } from '../../apis/article'
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import dayjs from 'dayjs'
 const { Option } = Select
 const { RangePicker } = DatePicker
 
 const Article = () => {
+  const navigate = useNavigate()
   const delArticle = async (id) => {
     await delArticleByIdAPI(id)
 
@@ -71,7 +73,7 @@ const Article = () => {
       render: data => {
         return (
           <Space size="middle">
-            <Button type="primary" shape="circle" icon={<EditOutlined />} />
+            <Button type="primary" shape="circle" icon={<EditOutlined onClick={()=>navigate(`/publish?id=${data.id}`)}/>} />
             <Popconfirm
               title="Delete the task"
               description="确认删除该条文章吗？"
