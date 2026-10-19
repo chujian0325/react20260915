@@ -23,10 +23,11 @@ export function uploadImg(data) {
   });
 }
 // 获取文章列表
-export function getArticleListAPI() {
+export function getArticleListAPI(params) {
   return request({
     url: "/mp/articles",
     method: "get",
+    params
   });
 }
 

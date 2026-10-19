@@ -9,6 +9,7 @@ import img404 from '../../assets/error.png'
 import { useChannels } from '../../hooks/useChannels'
 import { getArticleListAPI } from '../../apis/article'
 import { useEffect, useState } from 'react'
+import dayjs from 'dayjs'
 const { Option } = Select
 const { RangePicker } = DatePicker
 
@@ -89,20 +90,43 @@ const Article = () => {
   //     title: 'wkwebview离线化加载h5资源解决方案'
   //   }
   // ]
+  const [reqData, setReqData] = useState({
+    status: "",
+    channel_id: "",
+    begin_pubdate: "",
+    end_pubdate: "",
+    page: 1,
+    per_page: 4
+  })
 
   const [count, setCount] = useState(0)
 
   // 获取文章列表
   const [list, setList] = useState([])
+  async function getList(reqData = {}){
+    const res = await getArticleListAPI(reqData)
+    console.log(res)
+    setList(res.data.results)
+    setCount(res.data.total_count)
+  }
   useEffect(() => {
-    async function getList(){
-      const res = await getArticleListAPI()
-      console.log(res)
-      setList(res.data.results)
-      setCount(res.data.total_count)
-    }
-    getList()
-  }, [])
+    getList(reqData)
+  }, [reqData])
+
+  
+  const onFinish = async(formData) => {
+    console.log('Success:', formData)
+    setReqData({
+      status: formData.status,
+      channel_id: formData.channel_id,
+      begin_pubdate: (formData.date[0]).format('YYYY-MM-DD'),
+      end_pubdate: (formData.date[1]).format('YYYY-MM-DD'),
+      page: 1,
+      per_page: 4
+    })
+    // 重新拉取数据+渲染列表 --复用
+    // reqData依赖项发生变化，重新执行副作用
+  }
   return (
     <div>
       <Card
@@ -114,11 +138,11 @@ const Article = () => {
         }
         style={{ marginBottom: 20 }}
       >
-        <Form initialValues={{ status: '' }}>
+        <Form initialValues={{ status: '' }} onFinish={onFinish}>
           <Form.Item label="状态" name="status">
             <Radio.Group>
               <Radio value={''}>全部</Radio>
-              <Radio value={0}>草稿</Radio>
+              <Radio value={0}>待审核</Radio>
               <Radio value={2}>审核通过</Radio>
             </Radio.Group>
           </Form.Item>
@@ -126,7 +150,7 @@ const Article = () => {
           <Form.Item label="频道" name="channel_id">
             <Select
               placeholder="请选择文章频道"
-              defaultValue="lucy"
+              defaultValue=""
               style={{ width: 120 }}
             >
               {
