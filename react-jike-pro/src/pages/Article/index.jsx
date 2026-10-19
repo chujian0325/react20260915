@@ -127,6 +127,13 @@ const Article = () => {
     // 重新拉取数据+渲染列表 --复用
     // reqData依赖项发生变化，重新执行副作用
   }
+  const pageChange = (page) => {
+    console.log('page', page)
+    setReqData({
+      ...reqData,
+      page
+    })
+  }
   return (
     <div>
       <Card
@@ -174,7 +181,12 @@ const Article = () => {
         </Form>
       </Card>
       <Card title={`根据筛选条件共查询到 ${count} 条结果：`}>
-        <Table rowKey="id" columns={columns} dataSource={list} />
+        <Table rowKey="id" columns={columns} dataSource={list} pagination={{ 
+          current: reqData.page,
+          pageSize: reqData.per_page,
+          onChange: pageChange,
+          total: count
+         }} />
       </Card>
     </div>
   )
