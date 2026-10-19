@@ -31,4 +31,12 @@ export function getArticleListAPI(params) {
   });
 }
 
+// 删除
+export function delArticleByIdAPI(target) {
+  return request({
+    url: `/mp/articles/${target}`,
+    method: "delete",
+  });
+}
+
 

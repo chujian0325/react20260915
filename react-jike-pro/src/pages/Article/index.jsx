@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Card, Breadcrumb, Form, Button, Radio, DatePicker, Select } from 'antd'
+import { Card, Breadcrumb, Form, Button, Radio, DatePicker, Select, Popconfirm} from 'antd'
 // 引入汉化包，时间选择器显示中文
 import locale from 'antd/es/date-picker/locale/zh_CN'
 
@@ -7,13 +7,21 @@ import { Table, Tag, Space } from 'antd'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import img404 from '../../assets/error.png'
 import { useChannels } from '../../hooks/useChannels'
-import { getArticleListAPI } from '../../apis/article'
+import { getArticleListAPI, delArticleByIdAPI } from '../../apis/article'
 import { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 const { Option } = Select
 const { RangePicker } = DatePicker
 
 const Article = () => {
+  const delArticle = async (id) => {
+    await delArticleByIdAPI(id)
+
+    // 更新列表
+    setReqData({
+      ...reqData,
+    })
+  };
   const { channelList } = useChannels()
   const columns = [
     {
@@ -64,12 +72,20 @@ const Article = () => {
         return (
           <Space size="middle">
             <Button type="primary" shape="circle" icon={<EditOutlined />} />
-            <Button
-              type="primary"
-              danger
-              shape="circle"
-              icon={<DeleteOutlined />}
-            />
+            <Popconfirm
+              title="Delete the task"
+              description="确认删除该条文章吗？"
+              onConfirm={() => delArticle(data.id)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button
+                type="primary"
+                danger
+                shape="circle"
+                icon={<DeleteOutlined />}
+              />
+            </Popconfirm>
           </Space>
         )
       }
