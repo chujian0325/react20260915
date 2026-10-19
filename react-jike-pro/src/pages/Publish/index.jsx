@@ -12,10 +12,20 @@ import {
 import { PlusOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import './index.scss'
-
+import { Editor, Toolbar } from '@wangeditor/editor-for-react'
+import '@wangeditor/editor/dist/css/style.css'
+import { useState, useEffect } from 'react'
 const { Option } = Select
 
 const Publish = () => {
+  const [editor, setEditor] = useState(null)
+  const [html, setHtml] = useState('')
+  useEffect(() => {
+    return () => {
+      if (editor) editor.destroy()
+    }
+  }, [editor])
+  
   return (
     <div className="publish">
       <Card
@@ -54,6 +64,20 @@ const Publish = () => {
             rules={[{ required: true, message: '请输入文章内容' }]}
           >
             {/* 富文本编辑器 */}
+            <div>
+              <Toolbar editor={editor} mode="simple" />
+              <Editor
+                value={html || ''}
+                onChange={editorInst => {
+                  const htmlStr = editorInst.getHtml()
+                  setHtml(htmlStr)
+                }}
+                onCreated={setEditor}
+                mode="simple"
+                placeholder="请输入文章内容..."
+                style={{ height: '300px' }}
+              />
+            </div>
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 4 }}>
