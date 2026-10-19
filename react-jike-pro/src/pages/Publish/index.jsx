@@ -47,6 +47,7 @@ const Publish = () => {
       channel_id
     })
     console.log('提交', res)
+    message.success('发布成功')
   }
 
   // 上传图片

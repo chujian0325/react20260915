@@ -31,7 +31,15 @@ const Article = () => {
     {
       title: '状态',
       dataIndex: 'status',
-      render: data => <Tag color="green">审核通过</Tag>
+      render: data => {
+        console.log(data)
+        const statusMap = {
+          1: <Tag color="processing">待审核</Tag>,
+          2: <Tag color="success">审核通过</Tag>,
+          3: <Tag color="error">审核失败</Tag>,
+        }
+        return statusMap[data]
+      }
     },
     {
       title: '发布时间',
