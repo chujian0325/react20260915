@@ -5,12 +5,16 @@ const userStore = createSlice({
   name: "user",
   initialState: {
     token: getToken() || "",
+    userInfo: {}, // 用户信息
   },
   reducers: {
     setToken(state, action) {
       state.token = action.payload;
       _setToken(action.payload);
     },
+    setUserInfo(state, action) {
+      state.userInfo = action.payload;
+    }
   },
 });
 
@@ -21,7 +25,17 @@ const fetchLogin = (loginForm) => {
     dispatch(setToken(res.data.token));
   };
 };
-export { fetchLogin };
-export const { setToken } = userStore.actions;
+
+// 获取用户信息
+const fetchUserInfo = () => {
+  return async (dispatch) => {
+    const res = await request.get("/user/profile");
+    dispatch(setUserInfo(res.data));
+  };
+};
+
+
+export { fetchLogin, fetchUserInfo };
+export const { setToken, setUserInfo } = userStore.actions;
 const userReducer = userStore.reducer;
 export default userReducer;
