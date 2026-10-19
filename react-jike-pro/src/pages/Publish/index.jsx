@@ -7,7 +7,8 @@ import {
   Input,
   Upload,
   Space,
-  Select
+  Select,
+  message
 } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
@@ -37,14 +38,18 @@ const Publish = () => {
   }, [])
 
   const onFinish = (values) => {
+    if (imageList.length !== imageType) {
+      message.error('封面类型与图片数量不匹配')
+      return
+    }
     console.log('Success:', values, html)
-    const { title, channel_id } = values
+    const { title, channel_id, type } = values
     const res = addArticles({
       title,
       content: html,
       cover: {
-        type: 0,
-        images: []
+        type: type,
+        images: imageList.map((item) => item.response.data.url)
       },
       channel_id
     })
