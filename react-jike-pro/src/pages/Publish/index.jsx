@@ -17,6 +17,7 @@ import { Editor, Toolbar } from '@wangeditor/editor-for-react'
 import '@wangeditor/editor/dist/css/style.css'
 import { useState, useEffect } from 'react'
 import { getChannelApI, addArticles } from '../../apis/article'
+import { useChannels } from '../../hooks/useChannels'
 const { Option } = Select
 
 const Publish = () => {
@@ -27,15 +28,7 @@ const Publish = () => {
       if (editor) editor.destroy()
     }
   }, [editor])
-
-  const [channelList, setChannelList] = useState([])
-  useEffect(() => {
-    const getChannelList = async () => {
-      const res = await getChannelApI()
-      setChannelList(res.data.channels)
-    }
-    getChannelList()
-  }, [])
+  const { channelList } = useChannels()
 
   const onFinish = (values) => {
     if (imageList.length !== imageType) {
