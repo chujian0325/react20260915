@@ -121,8 +121,6 @@ const Article = () => {
       channel_id: formData.channel_id,
       begin_pubdate: (formData.date[0]).format('YYYY-MM-DD'),
       end_pubdate: (formData.date[1]).format('YYYY-MM-DD'),
-      page: 1,
-      per_page: 4
     })
     // 重新拉取数据+渲染列表 --复用
     // reqData依赖项发生变化，重新执行副作用
