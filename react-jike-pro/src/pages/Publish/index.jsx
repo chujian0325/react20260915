@@ -58,6 +58,13 @@ const Publish = () => {
       setImageList(info.fileList)
   }
 
+  const [imageType, setImageType] = useState(1)
+  const changType = (e) => {
+    console.log('切换封面', e.target.value)
+    setImageType(e.target.value)
+
+  }
+
   return (
     <div className="publish">
       <Card
@@ -97,7 +104,7 @@ const Publish = () => {
           </Form.Item>
           <Form.Item label="封面">
             <Form.Item name="type">
-              <Radio.Group>
+              <Radio.Group onChange={changType}>
                 <Radio value={1}>单图</Radio>
                 <Radio value={3}>三图</Radio>
                 <Radio value={0}>无图</Radio>
@@ -106,17 +113,19 @@ const Publish = () => {
             {/* listType：决定选择文件样式
                 showUploadList：是否展示上传列表
              */}
-            <Upload
-              name="image"
-              listType="picture-card"
-              showUploadList
-              action={'https://geek.itheima.net/v1_0/upload'}
-              onChange={onUploadChange}
-            >
-              <div style={{ marginTop: 8 }}>
-                <PlusOutlined />
-              </div>
-            </Upload>
+            {
+              imageType > 0 && <Upload
+                name="image"
+                listType="picture-card"
+                showUploadList
+                action={'https://geek.itheima.net/v1_0/upload'}
+                onChange={onUploadChange}
+              >
+                <div style={{ marginTop: 8 }}>
+                  <PlusOutlined />
+                </div>
+              </Upload>
+            }
           </Form.Item>
 
           <Form.Item
