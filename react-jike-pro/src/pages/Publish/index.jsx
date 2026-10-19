@@ -115,6 +115,7 @@ const Publish = () => {
              */}
             {
               imageType > 0 && <Upload
+                maxCount={imageType}
                 name="image"
                 listType="picture-card"
                 showUploadList
