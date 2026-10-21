@@ -81,6 +81,11 @@ const Publish = () => {
         ...res.data,
         type: res.data.cover.type,
       })
+      // 回显图片列表
+      setImageType(res.data.cover.type)
+      // 回显图片
+      setImageList(res.data.cover.images.map((item) => ({ url: item})))
+      console.log('回显图片', imageList)
       // 设置富文本回显
       setHtml(res.data.content)
     }
@@ -144,6 +149,7 @@ const Publish = () => {
                 showUploadList
                 action={'https://geek.itheima.net/v1_0/upload'}
                 onChange={onUploadChange}
+                fileList={imageList}
               >
                 <div style={{ marginTop: 8 }}>
                   <PlusOutlined />
