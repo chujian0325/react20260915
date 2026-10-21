@@ -16,8 +16,9 @@ import './index.scss'
 import { Editor, Toolbar } from '@wangeditor/editor-for-react'
 import '@wangeditor/editor/dist/css/style.css'
 import { useState, useEffect } from 'react'
-import { getChannelApI, addArticles } from '../../apis/article'
+import { getChannelApI, addArticles, getArticleByIdAPI } from '../../apis/article'
 import { useChannels } from '../../hooks/useChannels'
+import { useSearchParams } from 'react-router-dom'
 const { Option } = Select
 
 const Publish = () => {
@@ -26,6 +27,7 @@ const Publish = () => {
   useEffect(() => {
     return () => {
       if (editor) editor.destroy()
+
     }
   }, [editor])
   const { channelList } = useChannels()
@@ -64,6 +66,27 @@ const Publish = () => {
 
   }
 
+  // 获取实例
+  const [form] = Form.useForm()
+  // 数据回填
+  const [searchParams] = useSearchParams()
+  const articleId = searchParams.get('id')
+  console.log('文章id', articleId)
+  useEffect(() => {
+    async function getArticleDetail() {
+      const res = await getArticleByIdAPI(articleId)
+      console.log('文章详情', res)
+      // 回显表单：调用Form组件实例方法setFieldsValue回显数据
+      form.setFieldsValue({
+        ...res.data,
+        type: res.data.cover.type,
+      })
+      // 设置富文本回显
+      setHtml(res.data.content)
+    }
+    // 调用详情
+    getArticleDetail()
+  }, [articleId])
   return (
     <div className="publish">
       <Card
@@ -76,6 +99,7 @@ const Publish = () => {
         }
       >
         <Form
+          form={form}
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 16 }}
           initialValues={{ type: 1 }}

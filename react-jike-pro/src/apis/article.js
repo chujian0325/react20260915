@@ -38,5 +38,12 @@ export function delArticleByIdAPI(target) {
     method: "delete",
   });
 }
+// 查询详情
+export function getArticleByIdAPI(id) {
+  return request({
+    url: `/mp/articles/${id}`,
+    method: "get",
+  });
+}
 
 
