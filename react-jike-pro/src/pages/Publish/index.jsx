@@ -16,7 +16,7 @@ import './index.scss'
 import { Editor, Toolbar } from '@wangeditor/editor-for-react'
 import '@wangeditor/editor/dist/css/style.css'
 import { useState, useEffect } from 'react'
-import { getChannelApI, addArticles, getArticleByIdAPI } from '../../apis/article'
+import { getChannelApI, addArticles, getArticleByIdAPI, updateArticles } from '../../apis/article'
 import { useChannels } from '../../hooks/useChannels'
 import { useSearchParams } from 'react-router-dom'
 const { Option } = Select
@@ -39,15 +39,30 @@ const Publish = () => {
     }
     console.log('Success:', values, html)
     const { title, channel_id, type } = values
-    const res = addArticles({
+    const reqData = {
       title,
       content: html,
       cover: {
         type: type,
-        images: imageList.map((item) => item.response.data.url)
+        images: imageList.map((item) => {
+          if (item.response) { //新增的
+            return item.response.data.url
+          } else {//修改的
+            return item.url
+          }
+        })
       },
       channel_id
-    })
+    }
+    if (articleId) {//修改
+      const res = updateArticles({
+        ...reqData,
+        id: articleId
+      })
+
+    } else { //新增
+      const res = addArticles(reqData)
+    }
     console.log('提交', res)
     message.success('发布成功')
   }
