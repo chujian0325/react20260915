@@ -89,16 +89,18 @@ const Publish = () => {
       // 设置富文本回显
       setHtml(res.data.content)
     }
-    // 调用详情
-    getArticleDetail()
-  }, [articleId])
+    if (articleId) {
+      // 调用详情
+      getArticleDetail()
+    }
+  }, [articleId, form])
   return (
     <div className="publish">
       <Card
         title={
           <Breadcrumb items={[
             { title: <Link to={'/'}>首页</Link> },
-            { title: '发布文章' },
+            { title: `${articleId ? '编辑' : '发布'}文章` },
           ]}
           />
         }
